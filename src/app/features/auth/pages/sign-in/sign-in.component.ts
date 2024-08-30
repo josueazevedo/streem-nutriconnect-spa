@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { AlertComponent } from '../../../../shared/components/alert/alert.component';
 import { CommonModule } from '@angular/common';
+import { NavigateService } from '../../../../core/services/navigate.service';
+import { ROUTES } from '../../../../config/routes.config';
 
 @Component({
   selector: 'app-sign-in',
@@ -22,7 +24,8 @@ export class SignInComponent {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private readonly navigate: NavigateService
   ) {
     this.initForm();
   }
@@ -31,8 +34,8 @@ export class SignInComponent {
     this.authService
       .login(this.form.get('username')?.value, this.form.get('password')?.value)
       .subscribe({
-        next: (response) => {
-          //nav
+        next: () => {
+          this.navigate.goTo(ROUTES.HOME);
         },
         error: (error) => {
           this.alert = error.error.message;
