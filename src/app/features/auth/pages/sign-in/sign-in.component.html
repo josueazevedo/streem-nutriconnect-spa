@@ -71,9 +71,12 @@
           Entrar
         </button>
       </div>
+      <div *ngIf="alert">
+        <app-alert type="warning" [message]="alert" />
+      </div>
     </form>
 
-    <p class="mt-10 text-center text-sm text-gray-500">
+    <p class="mt-8 text-center text-sm text-gray-500">
       Não é um membro?
       <a
         href="#"
