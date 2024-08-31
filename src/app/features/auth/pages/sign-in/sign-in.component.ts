@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthData, AuthService } from '../../services/auth.service';
 import {
   FormBuilder,
   FormGroup,
@@ -9,7 +9,7 @@ import {
 import { AlertComponent } from '../../../../shared/components/alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { NavigateService } from '../../../../core/services/navigate.service';
-import { ROUTES } from '../../../../config/routes.config';
+import { AUTH_ROUTES } from '../../auth.routes';
 
 @Component({
   selector: 'app-sign-in',
@@ -34,8 +34,23 @@ export class SignInComponent {
     this.authService
       .login(this.form.get('username')?.value, this.form.get('password')?.value)
       .subscribe({
-        next: () => {
-          this.navigate.goTo(ROUTES.HOME);
+        next: (user) => {
+          if (!user.active) {
+            this.navigate.goTo(AUTH_ROUTES.userBlocked);
+            return;
+          }
+
+          if (!user.verified) {
+            this.navigate.goTo(AUTH_ROUTES.userVerify);
+            return;
+          }
+
+          if (user.profiles.includes('NUTRI')) {
+            this.navigate.goTo('');
+            return;
+          }
+
+          this.navigate.goTo(AUTH_ROUTES.forbidden);
         },
         error: (error) => {
           this.alert = error.error.message;

@@ -1,7 +1,6 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [
+export const DashboardRoutes: Routes = [
   {
     path: '',
     redirectTo: 'resume',
@@ -13,9 +12,3 @@ const routes: Routes = [
       import('./pages/resume/resume.component').then((m) => m.ResumeComponent),
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class DashboardRouterModule {}

@@ -1,24 +1,53 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [
+export const AUTH_MODULE_PATH = 'auth';
+
+const path = {
+  signIn: 'sign-in',
+  userVerify: 'user-verify',
+  forbidden: 'forbidden',
+  userBlocked: 'user-blocked',
+};
+
+export const AuthRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'sign-in',
+    redirectTo: path.signIn,
     pathMatch: 'full',
   },
   {
-    path: 'sign-in',
+    path: path.signIn,
     loadComponent: () =>
       import('./pages/sign-in/sign-in.component').then(
         (m) => m.SignInComponent
       ),
   },
+  {
+    path: path.userVerify,
+    loadComponent: () =>
+      import('./pages/user-verify/user-verify.component').then(
+        (m) => m.UserVerifyComponent
+      ),
+  },
+  {
+    path: path.forbidden,
+    loadComponent: () =>
+      import('./pages/forbidden/forbidden.component').then(
+        (m) => m.ForbiddenComponent
+      ),
+  },
+  {
+    path: path.userBlocked,
+    loadComponent: () =>
+      import('./pages/user-blocked/user-blocked.component').then(
+        (m) => m.UserBlockedComponent
+      ),
+  },
 ];
 
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class AuthRouterModule {}
+export const AUTH_ROUTES = {
+  signIn: `${AUTH_MODULE_PATH}/${path.signIn}`,
+  userVerify: `${AUTH_MODULE_PATH}/${path.userVerify}`,
+  forbidden: `${AUTH_MODULE_PATH}/${path.forbidden}`,
+  userBlocked: `${AUTH_MODULE_PATH}/${path.userBlocked}`,
+};
