@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthData, AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import {
   FormBuilder,
   FormGroup,
@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { AlertComponent } from '../../../../shared/components/alert/alert.component';
 import { CommonModule } from '@angular/common';
-import { NavigateService } from '../../../../core/services/navigate.service';
+import { NavigateService } from '../../../../core/services/navigate/navigate.service';
 import { AUTH_ROUTES } from '../../auth.routes';
 
 @Component({

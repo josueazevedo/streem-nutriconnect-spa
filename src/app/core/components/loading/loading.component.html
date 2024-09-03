@@ -1,0 +1,9 @@
+<div
+  *ngIf="loading$ | async"
+  id="loading"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-65"
+>
+  <div
+    class="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-white"
+  ></div>
+</div>
