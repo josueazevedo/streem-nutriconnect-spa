@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-import { Notification } from '../../../shared/components/notification/notification.component';
+import { Notification } from '../../components/notification/notification.component';
 
 @Injectable({
   providedIn: 'root',

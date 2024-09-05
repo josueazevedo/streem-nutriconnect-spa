@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
-import { NotificationComponent } from '../../../shared/components/notification/notification.component';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
   selector: 'app-main-content',

@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AlertComponent } from '../../../../shared/components/alert/alert.component';
+import { AlertComponent } from '../../../../core/components/alert/alert.component';
 import { CommonModule } from '@angular/common';
 import { NavigateService } from '../../../../core/services/navigate/navigate.service';
 import { AUTH_ROUTES } from '../../auth.routes';
