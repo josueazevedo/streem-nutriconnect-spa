@@ -7,7 +7,7 @@ export const DashboardRoutes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'sign-in',
+    path: 'resume',
     loadComponent: () =>
       import('./pages/resume/resume.component').then((m) => m.ResumeComponent),
   },
