@@ -4,6 +4,7 @@ export const AUTH_MODULE_PATH = 'auth';
 
 const path = {
   signIn: 'sign-in',
+  signUp: 'sign-up',
   userVerify: 'user-verify',
   forbidden: 'forbidden',
   userBlocked: 'user-blocked',
@@ -20,6 +21,13 @@ export const AuthRoutes: Routes = [
     loadComponent: () =>
       import('./pages/sign-in/sign-in.component').then(
         (m) => m.SignInComponent
+      ),
+  },
+  {
+    path: path.signUp,
+    loadComponent: () =>
+      import('./pages/sign-up/sign-up.component').then(
+        (m) => m.SignUpComponent
       ),
   },
   {
@@ -47,6 +55,7 @@ export const AuthRoutes: Routes = [
 
 export const AUTH_ROUTES = {
   signIn: `${AUTH_MODULE_PATH}/${path.signIn}`,
+  signUp: `${AUTH_MODULE_PATH}/${path.signUp}`,
   userVerify: `${AUTH_MODULE_PATH}/${path.userVerify}`,
   forbidden: `${AUTH_MODULE_PATH}/${path.forbidden}`,
   userBlocked: `${AUTH_MODULE_PATH}/${path.userBlocked}`,
