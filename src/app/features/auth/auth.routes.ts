@@ -8,6 +8,7 @@ const path = {
   userVerify: 'user-verify',
   forbidden: 'forbidden',
   userBlocked: 'user-blocked',
+  resetPass: 'reset-pass',
 };
 
 export const AuthRoutes: Routes = [
@@ -51,6 +52,13 @@ export const AuthRoutes: Routes = [
         (m) => m.UserBlockedComponent
       ),
   },
+  {
+    path: path.resetPass,
+    loadComponent: () =>
+      import('./pages/reset-pass/reset-pass.component').then(
+        (m) => m.ResetPassComponent
+      ),
+  },
 ];
 
 export const AUTH_ROUTES = {
@@ -59,4 +67,5 @@ export const AUTH_ROUTES = {
   userVerify: `${AUTH_MODULE_PATH}/${path.userVerify}`,
   forbidden: `${AUTH_MODULE_PATH}/${path.forbidden}`,
   userBlocked: `${AUTH_MODULE_PATH}/${path.userBlocked}`,
+  resetPass: `${AUTH_MODULE_PATH}/${path.resetPass}`,
 };

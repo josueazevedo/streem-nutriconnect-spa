@@ -64,4 +64,12 @@ export class SignInComponent {
       password: ['', [Validators.required]],
     });
   }
+
+  goToSignUp() {
+    this.navigate.goTo(AUTH_ROUTES.signUp);
+  }
+
+  goToResetPass() {
+    this.navigate.goTo(AUTH_ROUTES.resetPass);
+  }
 }

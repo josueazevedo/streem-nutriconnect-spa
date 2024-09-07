@@ -35,9 +35,9 @@
             class="block text-sm font-medium leading-6 text-gray-900"
             >Senha</label
           >
-          <div class="text-sm">
+          <div class="text-sm cursor-pointer">
             <a
-              href="#"
+              (click)="goToResetPass()"
               class="font-semibold text-indigo-600 hover:text-indigo-500"
               >Esqueceu sua senha?</a
             >
@@ -71,11 +71,12 @@
       </div>
     </form>
 
-    <p class="mt-6 text-center text-sm text-gray-500">
+    <p
+      class="mt-6 text-center text-sm text-gray-500 cursor-pointer"
+      (click)="goToSignUp()"
+    >
       Não é um membro?
-      <a
-        href="#"
-        class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+      <a class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
         >Comece um teste gratuito de 14 dias</a
       >
     </p>
