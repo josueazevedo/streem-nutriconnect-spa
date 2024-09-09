@@ -27,6 +27,10 @@ export class AuthService {
         })
       );
   }
+
+  registre(data: CreateUserData): Observable<Response> {
+    return this.http.post<Response>(URL_AUHT.REGISTER, data);
+  }
 }
 
 export type AuthData = {
@@ -34,4 +38,14 @@ export type AuthData = {
   verified: boolean;
   active: boolean;
   profiles: string[];
+};
+
+export type CreateUserData = {
+  name: string;
+  phone: string;
+  email: string;
+  username: string;
+  password: string;
+  confirme: string;
+  terms: Date;
 };

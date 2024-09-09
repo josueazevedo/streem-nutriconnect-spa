@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loadingInterceptor } from './core/interceptors/loading-http/loading-http.interceptor';
 import { credentialInterceptor } from './core/interceptors/credential-http/credential.interceptor';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,5 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([credentialInterceptor, loadingInterceptor])
     ),
+    provideEnvironmentNgxMask(),
   ],
 };

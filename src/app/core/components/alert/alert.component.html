@@ -1,10 +1,24 @@
-@switch (type) { @case ('info') {
 <div
-  class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+  [class.text-gray-800]="type == 'basic'"
+  [class.dark:text-gray-400]="type == 'basic'"
+  [class.bg-gray-50]="type == 'basic'"
+  [class.text-yellow-800]="type == 'warning'"
+  [class.dark:text-yellow-400]="type == 'warning'"
+  [class.bg-yellow-50]="type == 'warning'"
+  [class.text-green-800]="type == 'success'"
+  [class.dark:text-green-400]="type == 'success'"
+  [class.bg-green-50]="type == 'success'"
+  [class.text-red-800]="type == 'error'"
+  [class.dark:text-red-400]="type == 'error'"
+  [class.bg-red-50]="type == 'error'"
+  [class.text-blue-800]="type == 'info'"
+  [class.dark:text-blue-400]="type == 'info'"
+  [class.bg-blue-50]="type == 'info'"
+  class="flex p-4 mb-4 text-sm rounded-lg dark:bg-gray-800"
   role="alert"
 >
   <svg
-    class="flex-shrink-0 inline w-4 h-4 me-3"
+    class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
@@ -15,82 +29,10 @@
     />
   </svg>
   <span class="sr-only">Info</span>
-  <div><span class="font-medium">Importante!</span> {{ message }}</div>
+  <div>
+    <span class="font-medium">{{ message }}</span>
+    <ul *ngIf="list" class="mt-1.5 list-disc list-inside">
+      <li *ngFor="let msg of list">{{ msg }}</li>
+    </ul>
+  </div>
 </div>
-} @case ('error') {
-<div
-  class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
-  role="alert"
->
-  <svg
-    class="flex-shrink-0 inline w-4 h-4 me-3"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-    />
-  </svg>
-  <span class="sr-only">Info</span>
-  <div><span class="font-medium">Error!</span> {{ message }}</div>
-</div>
-} @case ('success') {
-<div
-  class="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
-  role="alert"
->
-  <svg
-    class="flex-shrink-0 inline w-4 h-4 me-3"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-    />
-  </svg>
-  <span class="sr-only">Info</span>
-  <div><span class="font-medium">Sucesso!</span> {{ message }}</div>
-</div>
-} @case ('warning') {
-<div
-  class="flex items-center p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
-  role="alert"
->
-  <svg
-    class="flex-shrink-0 inline w-4 h-4 me-3"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-    />
-  </svg>
-  <span class="sr-only">Info</span>
-  <div><span class="font-medium">Atenção!</span> {{ message }}</div>
-</div>
-} @case ('basic') {
-<div
-  class="flex items-center p-4 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
-  role="alert"
->
-  <svg
-    class="flex-shrink-0 inline w-4 h-4 me-3"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-    />
-  </svg>
-  <span class="sr-only">Info</span>
-  <div><span class="font-medium"></span> {{ message }}</div>
-</div>
-} }

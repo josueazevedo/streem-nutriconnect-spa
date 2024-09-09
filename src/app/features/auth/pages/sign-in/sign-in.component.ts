@@ -21,6 +21,7 @@ import { AUTH_ROUTES } from '../../auth.routes';
 export class SignInComponent {
   form!: FormGroup;
   alert: string = '';
+  hidePassword: boolean = true;
 
   constructor(
     private readonly authService: AuthService,
@@ -71,5 +72,9 @@ export class SignInComponent {
 
   goToResetPass() {
     this.navigate.goTo(AUTH_ROUTES.resetPass);
+  }
+
+  showPassword() {
+    this.hidePassword = !this.hidePassword;
   }
 }

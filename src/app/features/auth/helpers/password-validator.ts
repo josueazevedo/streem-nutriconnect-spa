@@ -4,14 +4,18 @@ export function PasswordValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const password = control.value;
 
-    const minLength = password?.length >= 8;
+    const errors: string[] = [];
 
-    const hasUpperCase = /[A-Z]/.test(password);
+    password?.length < 8 && errors.push('Ter pelo menos 8 caracteres');
 
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    !/\d/.test(password) && errors.push('Incluir ao menos 1 número');
 
-    const valid = minLength && hasUpperCase && hasSpecialChar;
+    !/[A-Z]/.test(password) &&
+      errors.push('Incluir ao menos 1 letra maiúscula');
 
-    return valid ? null : { invalidPassword: true };
+    !/[!@#$%^&*(),.?":{}|<>]/.test(password) &&
+      errors.push('Conter pelo menos 1 caractere especial (ex: @, #, $)');
+
+    return errors.length === 0 ? null : { invalidPassword: errors };
   };
 }

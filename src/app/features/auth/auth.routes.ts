@@ -26,6 +26,9 @@ export const AuthRoutes: Routes = [
   },
   {
     path: path.signUp,
+    data: {
+      header_title: 'Registre-se',
+    },
     loadComponent: () =>
       import('./pages/sign-up/sign-up.component').then(
         (m) => m.SignUpComponent

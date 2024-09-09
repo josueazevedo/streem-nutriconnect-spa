@@ -1,0 +1,13 @@
+<div class="flex gap-4 w-full flex-wrap">
+  <div
+    style="width: 100px; height: 60px"
+    *ngFor="let x of [].constructor(1062); let i = index"
+  >
+    <img
+      [src]="
+          'https://api.invertexto.com/v1/barcode?token=15271|DqZanghW3d62EpdeHefCj8Hn6JdvqFQO&type=code39&font=arial&text=VC' +
+          i
+        "
+    />
+  </div>
+</div>

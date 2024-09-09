@@ -1,0 +1,267 @@
+<form [formGroup]="form">
+  <div class="flex flex-col gap-4">
+    <div class="w-full border-b border-gray-900/10 mb-4 pb-10">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:basis-1/3 flex flex-col md:w-12">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            Dados Pessoais
+          </p>
+          <p class="text-xs text-gray-500">
+            Suas informações de identificação e contato
+          </p>
+        </div>
+        <div class="md:basis-2/3 w-full">
+          <div class="space-y-6">
+            <div>
+              <label
+                for="nome"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Nome</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="off"
+                  required
+                  formControlName="name"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Telefone</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  autocomplete="off"
+                  mask="(00) 00000-0000"
+                  required
+                  formControlName="phone"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Email</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="email"
+                  name="email"
+                  type="text"
+                  autocomplete="off"
+                  required
+                  formControlName="username"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full border-b border-gray-900/10 mb-4 pb-10">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:basis-1/3 flex flex-col md:w-12">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            Credenciais de acesso
+          </p>
+          <p class="text-xs text-gray-500">
+            Suas informações acesso ao sistema
+          </p>
+        </div>
+        <div class="md:basis-2/3 w-full">
+          <div class="space-y-6">
+            <div>
+              <label
+                for="username"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Usuário</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  autocomplete="off"
+                  readonly
+                  [disabled]="true"
+                  [value]="form.get('username')?.value"
+                  aria-label="disabled username"
+                  class="cursor-not-allowed bg-gray-50 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Senha</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <div class="relative">
+                  <input
+                    id="pass"
+                    name="pass"
+                    [type]="hidePassword ? 'password' : 'text'"
+                    autocomplete="off"
+                    required
+                    formControlName="password"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  <button
+                    id="togglePassword"
+                    type="button"
+                    class="absolute right-2 top-2 text-gray-600"
+                    (click)="showPassword()"
+                  >
+                    <i
+                      id="eyeIcon"
+                      class="fas fa-eye"
+                      [class.fa-eye]="!hidePassword"
+                      [class.fa-eye-slash]="hidePassword"
+                    ></i>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="md:max-w-md mt-2"
+                *ngIf="
+                  form.get('password')?.invalid &&
+                  (form.get('password')?.dirty || form.get('password')?.touched)
+                "
+              >
+                <app-alert
+                  type="basic"
+                  message="Para garantir sua segurança, a senha deve atender aos seguintes critérios:"
+                  [list]="(form.get('password')?.errors)!['invalidPassword']"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Confirme sua senha</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <div class="relative">
+                  <input
+                    id="confirme"
+                    name="confirme"
+                    [type]="hidePassword ? 'password' : 'text'"
+                    autocomplete="off"
+                    required
+                    formControlName="confirme"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  <button
+                    id="togglePassword"
+                    type="button"
+                    class="absolute right-2 top-2 text-gray-600"
+                    (click)="showPassword()"
+                  >
+                    <i
+                      id="eyeIcon"
+                      class="fas fa-eye"
+                      [class.fa-eye]="!hidePassword"
+                      [class.fa-eye-slash]="hidePassword"
+                    ></i>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="md:max-w-md mt-2"
+                *ngIf="
+                  form.hasError('passwordMismatch') &&
+                  (form.get('confirme')?.dirty || form.get('confirme')?.touched)
+                "
+              >
+                <app-alert type="basic" message="As senhas não são iguais" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full border-b border-gray-900/10 mb-4 pb-10">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:basis-1/3 flex flex-col md:w-12">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            Termos e Políticas de privacidade
+          </p>
+          <p class="text-xs text-gray-500">
+            Para se registrar, você precisa ler e concordar com nossos
+            <a
+              class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >Termos</a
+            >,
+            <a
+              class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >Política de Privacidade</a
+            >
+            e
+            <a
+              class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >Política de Cookies</a
+            >.
+          </p>
+        </div>
+        <div class="md:basis-2/3 w-full">
+          <div class="space-y-6">
+            <div class="flex items-center">
+              <input
+                id="termos"
+                type="checkbox"
+                formControlName="terms"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="termos"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Concordo com os
+                <span class="text-gray-500 font-bold">Termos e condições</span>.
+              </label>
+            </div>
+            <div class="pt-6 md:max-w-md flex justify-center">
+              <button
+                type="submit"
+                (click)="registre()"
+                [disabled]="form.invalid || !form.get('terms')?.value"
+                class="flex w-full max-w-md md:w-1/2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                Registre-se
+              </button>
+            </div>
+            <div class="md:max-w-md" *ngIf="alert">
+              <app-alert type="warning" [message]="alert" />
+            </div>
+            <div
+              class="pt-6 md:max-w-md flex justify-center cursor-pointer text-xs"
+              (click)="goToSignIp()"
+            >
+              <span
+                >Já possui conta?
+                <a
+                  class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                  >Clique aqui para entrar</a
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
