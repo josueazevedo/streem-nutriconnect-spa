@@ -14,6 +14,7 @@ import { passwordMatchValidator } from '../../helpers/password-compare';
 import { AlertComponent } from '../../../../core/components/alert/alert.component';
 import { PasswordValidator } from '../../helpers/password-validator';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
+import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 
 @Component({
   selector: 'app-sign-up',
@@ -81,7 +82,9 @@ export class SignUpComponent {
         this.navigate.goTo(AUTH_ROUTES.signIn);
       },
       error: (error) => {
-        this.alert = error.error.message;
+        errorNotify(() => {
+          this.alert = error.error.message;
+        }, error);
       },
     });
   }

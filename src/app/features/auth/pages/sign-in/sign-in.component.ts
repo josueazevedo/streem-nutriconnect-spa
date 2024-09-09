@@ -10,6 +10,7 @@ import { AlertComponent } from '../../../../core/components/alert/alert.componen
 import { CommonModule } from '@angular/common';
 import { NavigateService } from '../../../../core/services/navigate/navigate.service';
 import { AUTH_ROUTES } from '../../auth.routes';
+import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 
 @Component({
   selector: 'app-sign-in',
@@ -54,7 +55,9 @@ export class SignInComponent {
           this.navigate.goTo(AUTH_ROUTES.forbidden);
         },
         error: (error) => {
-          this.alert = error.error.message;
+          errorNotify(() => {
+            this.alert = error.error.message;
+          }, error);
         },
       });
   }

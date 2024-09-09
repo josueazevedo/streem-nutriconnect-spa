@@ -6,12 +6,17 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loadingInterceptor } from './core/interceptors/loading-http/loading-http.interceptor';
 import { credentialInterceptor } from './core/interceptors/credential-http/credential.interceptor';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { errorInterceptor } from './core/interceptors/error-http/error-http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([credentialInterceptor, loadingInterceptor])
+      withInterceptors([
+        credentialInterceptor,
+        loadingInterceptor,
+        errorInterceptor,
+      ])
     ),
     provideEnvironmentNgxMask(),
   ],
