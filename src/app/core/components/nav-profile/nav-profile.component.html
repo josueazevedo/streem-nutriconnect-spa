@@ -1,4 +1,4 @@
-<div class="relative group">
+<div *ngIf="profile$ | async as person" class="relative group">
   <div class="flex items-center px-5">
     <div class="flex-shrink-0">
       <img
@@ -8,10 +8,10 @@
       />
     </div>
     <div class="ml-3">
-      <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-      <div class="text-sm font-medium leading-none text-gray-400">
-        tomexample.com
+      <div class="text-base font-medium leading-none text-white">
+        {{ person?.name }}
       </div>
+      <div class="text-sm font-medium leading-none text-gray-400"></div>
     </div>
     <button
       type="button"

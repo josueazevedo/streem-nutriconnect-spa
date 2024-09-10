@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { NavigateService } from '../../../../core/services/navigate/navigate.service';
 import { AUTH_ROUTES } from '../../auth.routes';
 import { errorNotify } from '../../../../core/helpers/error-notify.helper';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
@@ -37,11 +38,6 @@ export class SignInComponent {
       .login(this.form.get('username')?.value, this.form.get('password')?.value)
       .subscribe({
         next: (user) => {
-          if (!user.active) {
-            this.navigate.goTo(AUTH_ROUTES.userBlocked);
-            return;
-          }
-
           if (!user.verified) {
             this.navigate.goTo(AUTH_ROUTES.userVerify);
             return;
@@ -54,8 +50,12 @@ export class SignInComponent {
 
           this.navigate.goTo(AUTH_ROUTES.forbidden);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           errorNotify(() => {
+            if (error.status === 403) {
+              this.navigate.goTo(AUTH_ROUTES.userBlocked);
+              return;
+            }
             this.alert = error.error.message;
           }, error);
         },

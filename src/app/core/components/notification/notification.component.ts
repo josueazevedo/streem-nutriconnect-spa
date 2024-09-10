@@ -30,7 +30,7 @@ export class NotificationComponent implements OnDestroy {
     this.list.set(notification.id, notification);
     setTimeout(() => {
       this.removeNotification(notification.id);
-    }, 5000);
+    }, 10000);
   }
 
   removeNotification(id: string) {
