@@ -67,11 +67,11 @@ export class SignUpComponent {
     const data: CreateUserData = {
       name: this.form.value.name,
       phone: this.form.value.phone,
-      email: this.form.value.email,
+      email: this.form.value.username,
       username: this.form.value.username,
       password: this.form.value.password,
       confirme: this.form.value.confirme,
-      terms: new Date(),
+      terms: this.form.value.terms,
     };
     this.authService.registre(data).subscribe({
       next: () => {

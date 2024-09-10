@@ -13,6 +13,6 @@ import { AUTH_ROUTES } from './features/auth/auth.routes';
 })
 export class AppComponent {
   constructor(private nav: NavigateService) {
-    nav.goTo(AUTH_ROUTES.signUp);
+    // nav.goTo(AUTH_ROUTES.signUp);
   }
 }

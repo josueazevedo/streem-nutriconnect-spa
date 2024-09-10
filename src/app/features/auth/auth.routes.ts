@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '../../core/guards/auth.guard';
 
 export const AUTH_MODULE_PATH = 'auth';
 
@@ -36,6 +37,7 @@ export const AuthRoutes: Routes = [
   },
   {
     path: path.userVerify,
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/user-verify/user-verify.component').then(
         (m) => m.UserVerifyComponent

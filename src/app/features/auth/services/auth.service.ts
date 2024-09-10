@@ -35,6 +35,7 @@ export class AuthService {
 
 export type AuthData = {
   name: string;
+  url: string;
   verified: boolean;
   active: boolean;
   profiles: string[];
