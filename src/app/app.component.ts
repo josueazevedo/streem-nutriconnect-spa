@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NavigateService } from './core/services/navigate/navigate.service';
-import { AUTH_ROUTES } from './features/auth/auth.routes';
+import { PATIENT_ROUTES } from './features/patient/patient.routes';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,6 @@ import { AUTH_ROUTES } from './features/auth/auth.routes';
 })
 export class AppComponent {
   constructor(private nav: NavigateService) {
-    nav.goTo(AUTH_ROUTES.userBlocked);
+    // nav.goTo(PATIENT_ROUTES.form);
   }
 }

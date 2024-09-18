@@ -23,7 +23,7 @@
             autocomplete="email"
             required
             formControlName="username"
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -38,7 +38,7 @@
           <div class="text-sm cursor-pointer">
             <a
               (click)="goToResetPass()"
-              class="font-semibold text-indigo-600 hover:text-indigo-500"
+              class="font-semibold text-sky-600 hover:text-sky-500"
               >Esqueceu sua senha?</a
             >
           </div>
@@ -52,7 +52,7 @@
               autocomplete="current-password"
               required
               formControlName="password"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
             />
             <button
               id="togglePassword"
@@ -75,7 +75,7 @@
         <button
           [disabled]="form.invalid"
           type="submit"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          class="flex w-full justify-center rounded-md bg-sky-600 font-medium px-3 py-1.5 text-sm leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
           (click)="login()"
         >
           Entrar
@@ -91,7 +91,7 @@
       (click)="goToSignUp()"
     >
       Não é um membro?
-      <a class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+      <a class="font-semibold leading-6 text-sky-600 hover:text-sky-500"
         >Comece um teste gratuito de 14 dias</a
       >
     </p>

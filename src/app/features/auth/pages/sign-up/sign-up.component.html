@@ -26,7 +26,7 @@
                   autocomplete="off"
                   required
                   formControlName="name"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -45,7 +45,7 @@
                   mask="(00) 00000-0000"
                   required
                   formControlName="phone"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -63,7 +63,7 @@
                   autocomplete="off"
                   required
                   formControlName="username"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -99,7 +99,7 @@
                   [disabled]="true"
                   [value]="form.get('username')?.value"
                   aria-label="disabled username"
-                  class="cursor-not-allowed bg-gray-50 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="cursor-not-allowed bg-gray-50 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -118,7 +118,7 @@
                     autocomplete="off"
                     required
                     formControlName="password"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                   <button
                     id="togglePassword2"
@@ -164,7 +164,7 @@
                     autocomplete="off"
                     required
                     formControlName="confirme"
-                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                   <button
                     id="togglePassword"
@@ -204,16 +204,16 @@
           <p class="text-xs text-gray-500">
             Para se registrar, você precisa ler e concordar com nossos
             <a
-              class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              class="cursor-pointer font-semibold leading-6 text-sky-600 hover:text-sky-500"
               >Termos</a
             >,
             <a
-              class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              class="cursor-pointer font-semibold leading-6 text-sky-600 hover:text-sky-500"
               >Política de Privacidade</a
             >
             e
             <a
-              class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              class="cursor-pointer font-semibold leading-6 text-sky-600 hover:text-sky-500"
               >Política de Cookies</a
             >.
           </p>
@@ -225,7 +225,7 @@
                 id="termos"
                 type="checkbox"
                 formControlName="terms"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                class="w-4 h-4 text-sky-600 bg-gray-100 border-gray-300 rounded focus:ring-sky-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
                 for="termos"
@@ -239,7 +239,7 @@
                 type="submit"
                 (click)="registre()"
                 [disabled]="form.invalid || !form.get('terms')?.value"
-                class="flex w-full max-w-md md:w-1/2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                class="flex w-full max-w-md md:w-1/2 justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Registre-se
               </button>
@@ -254,7 +254,7 @@
               <span
                 >Já possui conta?
                 <a
-                  class="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                  class="cursor-pointer font-semibold leading-6 text-sky-600 hover:text-sky-500"
                   >Clique aqui para entrar</a
                 ></span
               >
