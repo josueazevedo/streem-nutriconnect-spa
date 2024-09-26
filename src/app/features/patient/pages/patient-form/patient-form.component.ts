@@ -9,4 +9,10 @@ import { PageTabContentComponent } from '../../../../shared/components/page-tab-
   templateUrl: './patient-form.component.html',
   styleUrl: './patient-form.component.scss',
 })
-export class PatientFormComponent {}
+export class PatientFormComponent {
+  hideMenu: boolean = true;
+
+  toggleMenu(): void {
+    this.hideMenu = !this.hideMenu;
+  }
+}

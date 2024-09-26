@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -15,6 +15,7 @@ import { tap } from 'rxjs';
   styleUrl: './nav-header.component.scss',
 })
 export class NavHeaderComponent {
+  @Input()
   title: string = '';
 
   constructor(

@@ -15,7 +15,7 @@ export const PatientRoutes: Routes = [
   {
     path: path.form,
     data: {
-      header_title: 'Registre-se',
+      header_title: 'Prontuário',
     },
     loadComponent: () =>
       import('./pages/patient-form/patient-form.component').then(
