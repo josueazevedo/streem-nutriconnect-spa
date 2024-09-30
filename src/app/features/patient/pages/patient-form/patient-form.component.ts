@@ -188,6 +188,6 @@ export class PatientFormComponent implements FormComponentGuard {
   }
 
   hasUnsavedChanges = () => {
-    return this.form.dirty;
+    return this.form.dirty || this.imageUrl != null;
   };
 }
