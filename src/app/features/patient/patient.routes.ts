@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { FormGuard } from '../../core/guards/form.guard';
 
 export const PATIENT_MODULE_PATH = 'patient';
 
@@ -14,6 +15,7 @@ export const PatientRoutes: Routes = [
   },
   {
     path: path.form,
+    canDeactivate: [FormGuard],
     data: {
       header_title: 'Prontuário',
     },

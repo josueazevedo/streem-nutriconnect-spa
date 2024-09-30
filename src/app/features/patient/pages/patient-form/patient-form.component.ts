@@ -17,6 +17,9 @@ import { parseFormErrorMessage } from '../../../../shared/helpers/form-error-mes
 import { PatientRepositoryService } from '../../services/patient/patient-repository.service';
 import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 import { parseToFormData } from '../../../../shared/helpers/parse-formdata.helper';
+import { FormComponentGuard } from '../../../../core/guards/form.guard';
+import { Observable } from 'rxjs';
+import { NavigateService } from '../../../../core/services/navigate/navigate.service';
 
 @Component({
   selector: 'app-patient-form',
@@ -32,7 +35,7 @@ import { parseToFormData } from '../../../../shared/helpers/parse-formdata.helpe
   templateUrl: './patient-form.component.html',
   styleUrl: './patient-form.component.scss',
 })
-export class PatientFormComponent {
+export class PatientFormComponent implements FormComponentGuard {
   hideMenu: boolean = true;
   form!: FormGroup;
   sexOptons = [
@@ -47,32 +50,34 @@ export class PatientFormComponent {
     private notify: NotificationService,
     private cepSearc: SearchCepService,
     private fb: FormBuilder,
-    private patientRepo: PatientRepositoryService
+    private patientRepo: PatientRepositoryService,
+    private nav: NavigateService
   ) {
     this.initForm();
   }
 
   save(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      this.notify.addNotification(
-        'warning',
-        'Preencha todos os campos obrigatórios'
-      );
-      return;
-    }
+    this.nav.goTo('/auth/sign-in');
+    // if (this.form.invalid) {
+    //   this.form.markAllAsTouched();
+    //   this.notify.addNotification(
+    //     'warning',
+    //     'Preencha todos os campos obrigatórios'
+    //   );
+    //   return;
+    // }
 
-    const formData = parseToFormData(this.form.value);
-    if (this.file) {
-      formData.append('file', this.file);
-    }
+    // const formData = parseToFormData(this.form.value);
+    // if (this.file) {
+    //   formData.append('file', this.file);
+    // }
 
-    if (this.form.get('id')) {
-      this.update(formData, this.form.get('id')?.value);
-      return;
-    }
+    // if (this.form.get('id')) {
+    //   this.update(formData, this.form.get('id')?.value);
+    //   return;
+    // }
 
-    this.create(formData);
+    // this.create(formData);
   }
 
   create(patient: FormData) {
@@ -181,4 +186,8 @@ export class PatientFormComponent {
     this.file = undefined;
     this.imageUrl = null;
   }
+
+  hasUnsavedChanges = () => {
+    return this.form.dirty;
+  };
 }
