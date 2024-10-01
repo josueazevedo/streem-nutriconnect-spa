@@ -2,18 +2,18 @@ export interface Patient {
   id: string;
   name: string;
   email: string;
-  phoneNumber: string;
-  dateOfBirth: string;
+  phone_number: string;
+  date_of_birth: Date;
   gender: string;
   street: string;
   number: string;
-  complement: string;
+  complement?: string;
   neighborhood: string;
   city: string;
   state: string;
-  zipCode: string;
-  photo: string;
+  zip_code: string;
+  photo?: string;
   status: boolean;
-  createdAt: string;
-  updatedAt: string;
+  created_at: Date;
+  updated_at: Date;
 }

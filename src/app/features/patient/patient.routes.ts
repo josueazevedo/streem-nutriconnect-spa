@@ -1,17 +1,23 @@
 import { Routes } from '@angular/router';
 import { FormGuard } from '../../core/guards/form.guard';
 
-export const PATIENT_MODULE_PATH = 'patient';
+export const PATIENT_MODULE_PATH = 'patients';
 
 const path = {
+  list: '',
   form: 'form',
 };
 
 export const PatientRoutes: Routes = [
   {
-    path: '',
-    redirectTo: path.form,
-    pathMatch: 'full',
+    path: path.list,
+    data: {
+      header_title: 'Prontuários',
+    },
+    loadComponent: () =>
+      import('./pages/patient-list/patient-list.component').then(
+        (m) => m.PatientListComponent
+      ),
   },
   {
     path: path.form,
@@ -27,5 +33,6 @@ export const PatientRoutes: Routes = [
 ];
 
 export const PATIENT_ROUTES = {
+  list: `${PATIENT_MODULE_PATH}`,
   form: `${PATIENT_MODULE_PATH}/${path.form}`,
 };

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Response } from '../../../../shared/types/response.interface';
+import { Response } from '../../../../core/types/response.interface';
 import { Patient } from '../../models/patient.model';
 import { URL_PATIENT } from '../../url.patient';
 

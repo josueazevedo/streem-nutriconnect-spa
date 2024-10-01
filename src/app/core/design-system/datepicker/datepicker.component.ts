@@ -16,20 +16,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   styleUrl: './datepicker.component.scss',
 })
 export class DatepickerComponent implements ControlValueAccessor {
-  value: string | null = null; // Valor do input
+  value: string | null = null;
 
-  // Funções que serão chamadas pelo Angular Forms
   private onChange: (value: any) => void = () => {};
   public onTouched: () => void = () => {};
 
-  // Método para ouvir a entrada do usuário
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.value = input.value;
-    this.onChange(this.value); // Notifica o Angular Forms sobre a mudança de valor
+    this.onChange(this.value);
   }
 
-  // Métodos da interface ControlValueAccessor
   writeValue(value: any): void {
     this.value = value;
   }
@@ -42,7 +39,5 @@ export class DatepickerComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    // Implementa o estado de desabilitado, se necessário
-  }
+  setDisabledState?(isDisabled: boolean): void {}
 }

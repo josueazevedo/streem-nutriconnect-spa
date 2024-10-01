@@ -1,4 +1,4 @@
-import { Response } from './../../../shared/types/response.interface';
+import { Response } from '../../../core/types/response.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_AUHT } from '../url.auth';

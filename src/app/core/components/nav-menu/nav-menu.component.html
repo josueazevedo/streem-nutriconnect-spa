@@ -1,7 +1,9 @@
-<div>
+<div class="md:hidden space-y-1 px-2 pb-3 pt-2 sm:px-3">
   <a
-    href="#"
-    class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+    [routerLink]="'XXXX'"
+    routerLinkActive="bg-gray-900"
+    [routerLinkActiveOptions]="{ exact: false }"
+    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:text-white"
     aria-current="page"
     >Dashboard</a
   >
@@ -11,17 +13,23 @@
     >Team</a
   >
   <a
-    href="#"
+    [routerLink]="patientRoutes.form"
+    routerLinkActive="bg-gray-900"
+    [routerLinkActiveOptions]="{ exact: false }"
     class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-    >Projects</a
+    >Pacientes</a
   >
   <a
-    href="#"
+    [routerLink]="'XXXX'"
+    routerLinkActive="bg-gray-900"
+    [routerLinkActiveOptions]="{ exact: false }"
     class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
     >Calendar</a
   >
   <a
-    href="#"
+    [routerLink]="'XXXX'"
+    routerLinkActive="bg-gray-900"
+    [routerLinkActiveOptions]="{ exact: false }"
     class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
     >Reports</a
   >
@@ -30,29 +38,38 @@
   <div class="ml-10 flex items-baseline space-x-4">
     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
     <a
-      href="#"
-      class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+      [routerLink]="'XXXX'"
+      routerLinkActive="bg-gray-900"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
       aria-current="page"
       >Dashboard</a
     >
     <a
-      href="#"
-      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-      >Team</a
+      [routerLink]="patientRoutes.list"
+      routerLinkActive="bg-gray-900"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
+      >Pacientes</a
     >
     <a
-      href="#"
-      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+      [routerLink]="patientRoutes.form"
+      routerLinkActive="bg-gray-900"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
       >Projects</a
     >
     <a
-      href="#"
-      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+      [routerLink]="'XXXX'"
+      routerLinkActive="bg-gray-900"
+      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
       >Calendar</a
     >
     <a
-      href="#"
-      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+      [routerLink]="'XXXX'"
+      routerLinkActive="bg-gray-900"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
       >Reports</a
     >
   </div>

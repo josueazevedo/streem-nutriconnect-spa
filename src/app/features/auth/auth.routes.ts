@@ -52,6 +52,7 @@ export const AuthRoutes: Routes = [
   },
   {
     path: path.userBlocked,
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/user-blocked/user-blocked.component').then(
         (m) => m.UserBlockedComponent

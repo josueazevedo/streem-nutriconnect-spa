@@ -9,17 +9,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { DropdownComponent } from '../../../../shared/design-system/dropdown/dropdown.component';
+import { DropdownComponent } from '../../../../core/design-system/dropdown/dropdown.component';
 import { Patient } from '../../models/patient.model';
-import { DatepickerComponent } from '../../../../shared/design-system/datepicker/datepicker.component';
+import { DatepickerComponent } from '../../../../core/design-system/datepicker/datepicker.component';
 import { AlertComponent } from '../../../../core/components/alert/alert.component';
-import { parseFormErrorMessage } from '../../../../shared/helpers/form-error-message.helper';
+import { parseFormErrorMessage } from '../../../../core/helpers/form-error-message.helper';
 import { PatientRepositoryService } from '../../services/patient/patient-repository.service';
 import { errorNotify } from '../../../../core/helpers/error-notify.helper';
-import { parseToFormData } from '../../../../shared/helpers/parse-formdata.helper';
+import { parseToFormData } from '../../../../core/helpers/parse-formdata.helper';
 import { FormComponentGuard } from '../../../../core/guards/form.guard';
-import { Observable } from 'rxjs';
-import { NavigateService } from '../../../../core/services/navigate/navigate.service';
+import { CapitalizeDirective } from '../../../../core/directives/captalize/capitalize.directive';
+import { PreventSpacesDirective } from '../../../../core/directives/preventSpaces/prevent-spaces.directive';
 
 @Component({
   selector: 'app-patient-form',
@@ -31,6 +31,8 @@ import { NavigateService } from '../../../../core/services/navigate/navigate.ser
     NgxMaskDirective,
     ReactiveFormsModule,
     AlertComponent,
+    CapitalizeDirective,
+    PreventSpacesDirective,
   ],
   templateUrl: './patient-form.component.html',
   styleUrl: './patient-form.component.scss',
@@ -50,34 +52,32 @@ export class PatientFormComponent implements FormComponentGuard {
     private notify: NotificationService,
     private cepSearc: SearchCepService,
     private fb: FormBuilder,
-    private patientRepo: PatientRepositoryService,
-    private nav: NavigateService
+    private patientRepo: PatientRepositoryService
   ) {
     this.initForm();
   }
 
   save(): void {
-    this.nav.goTo('/auth/sign-in');
-    // if (this.form.invalid) {
-    //   this.form.markAllAsTouched();
-    //   this.notify.addNotification(
-    //     'warning',
-    //     'Preencha todos os campos obrigatórios'
-    //   );
-    //   return;
-    // }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.notify.addNotification(
+        'warning',
+        'Preencha todos os campos obrigatórios'
+      );
+      return;
+    }
 
-    // const formData = parseToFormData(this.form.value);
-    // if (this.file) {
-    //   formData.append('file', this.file);
-    // }
+    const formData = parseToFormData(this.form.value);
+    if (this.file) {
+      formData.append('file', this.file);
+    }
 
-    // if (this.form.get('id')) {
-    //   this.update(formData, this.form.get('id')?.value);
-    //   return;
-    // }
+    if (this.form.get('id')?.value) {
+      this.update(formData, this.form.get('id')?.value);
+      return;
+    }
 
-    // this.create(formData);
+    this.create(formData);
   }
 
   create(patient: FormData) {
@@ -119,8 +119,8 @@ export class PatientFormComponent implements FormComponentGuard {
       id: [patient?.id || ''],
       name: [patient?.name || '', [Validators.required]],
       email: [patient?.email || '', [Validators.email]],
-      phoneNumber: [patient?.phoneNumber || ''],
-      dateOfBirth: [patient?.dateOfBirth || '', [Validators.required]],
+      phone_number: [patient?.phone_number || ''],
+      date_of_birth: [patient?.date_of_birth || '', [Validators.required]],
       gender: [patient?.gender || '', [Validators.required]],
       street: [patient?.street || ''],
       number: [patient?.number || ''],
@@ -128,18 +128,18 @@ export class PatientFormComponent implements FormComponentGuard {
       neighborhood: [patient?.neighborhood || ''],
       city: [patient?.city || ''],
       state: [patient?.state || ''],
-      zipCode: [patient?.zipCode || ''],
+      zip_code: [patient?.zip_code || ''],
       photo: [patient?.photo || ''],
       status: [patient?.status || true],
-      createdAt: [patient?.createdAt || ''],
-      updatedAt: [patient?.updatedAt || '10.'],
+      created_at: [patient?.created_at || ''],
+      updated_at: [patient?.updated_at || ''],
     });
   }
 
   findZipCode(): void {
-    const zipCode = this.form.get('zipCode')?.value;
-    if (zipCode && zipCode.length === 8) {
-      this.cepSearc.find(zipCode).subscribe({
+    const zip_code = this.form.get('zip_code')?.value;
+    if (zip_code && zip_code.length === 8) {
+      this.cepSearc.find(zip_code).subscribe({
         next: (data) => {
           this.form.patchValue({
             street: data.logradouro,

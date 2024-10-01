@@ -183,6 +183,8 @@
         >
         <div class="mt-2">
           <input
+            appCapitalize
+            appPreventSpaces
             id="name"
             name="name"
             type="text"
@@ -212,16 +214,19 @@
             ></label
           >
           <div class="mt-2">
-            <dss-datepicker formControlName="dateOfBirth" />
+            <dss-datepicker formControlName="date_of_birth" />
             <div
               class="mt-2"
               *ngIf="
-                form.get('dateOfBirth')?.invalid &&
-                (form.get('dateOfBirth')?.dirty ||
-                  form.get('dateOfBirth')?.touched)
+                form.get('date_of_birth')?.invalid &&
+                (form.get('date_of_birth')?.dirty ||
+                  form.get('date_of_birth')?.touched)
               "
             >
-              <app-alert type="basic" [message]="getErrorMessage('name')" />
+              <app-alert
+                type="basic"
+                [message]="getErrorMessage('date_of_birth')"
+              />
             </div>
           </div>
         </div>
@@ -260,7 +265,7 @@
               type="tel"
               mask="(00) 00000-0000"
               autocomplete="off"
-              formControlName="phoneNumber"
+              formControlName="phone_number"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -273,6 +278,7 @@
           >
           <div class="mt-2">
             <input
+              appPreventSpaces
               id="email"
               name="email"
               type="text"
@@ -304,18 +310,18 @@
       <div class="flex flex-col md:flex-row gap-4">
         <div class="flex-1">
           <label
-            for="name"
+            for="cep"
             class="block text-sm font-medium leading-6 text-gray-900"
             >Cep</label
           >
           <div class="flex gap-4 mt-2 relative">
             <input
-              id="name"
-              name="name"
+              id="cep"
+              name="cep"
               type="tel"
               autocomplete="off"
               mask="00000-000"
-              formControlName="zipCode"
+              formControlName="zip_code"
               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
             />
             <button
@@ -352,6 +358,8 @@
         >
         <div class="mt-2">
           <input
+            appCapitalize
+            appPreventSpaces
             id="street"
             name="street"
             type="text"
@@ -373,6 +381,8 @@
             <input
               id="number"
               name="number"
+              appCapitalize
+              appPreventSpaces
               type="text"
               autocomplete="off"
               formControlName="number"
@@ -388,6 +398,8 @@
           >
           <div class="mt-2">
             <input
+              appCapitalize
+              appPreventSpaces
               id="bairro"
               name="bairro"
               type="text"
@@ -405,6 +417,8 @@
           >
           <div class="mt-2">
             <input
+              appCapitalize
+              appPreventSpaces
               id="complement"
               name="complement"
               type="text"
@@ -425,6 +439,8 @@
           >
           <div class="mt-2">
             <input
+              appCapitalize
+              appPreventSpaces
               id="city"
               name="city"
               type="text"
@@ -442,6 +458,8 @@
           >
           <div class="mt-2">
             <input
+              appCapitalize
+              appPreventSpaces
               id="state"
               name="state"
               type="text"
