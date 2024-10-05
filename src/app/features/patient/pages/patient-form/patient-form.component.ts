@@ -130,7 +130,7 @@ export class PatientFormComponent implements FormComponentGuard {
       state: [patient?.state || ''],
       zip_code: [patient?.zip_code || ''],
       photo: [patient?.photo || ''],
-      status: [patient?.status || true],
+      status: [patient?.status == undefined ? true : patient?.status],
       created_at: [patient?.created_at || ''],
       updated_at: [patient?.updated_at || ''],
     });

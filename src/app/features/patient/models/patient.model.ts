@@ -13,7 +13,7 @@ export interface Patient {
   state: string;
   zip_code: string;
   photo?: string;
-  status: boolean;
+  status: boolean | string;
   created_at: Date;
   updated_at: Date;
 }

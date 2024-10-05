@@ -1,0 +1,192 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th *ngIf="activeSelection" scope="col" class="p-4">
+          <div class="flex items-center">
+            <input
+              id="checkbox-all-search"
+              type="checkbox"
+              [ngModel]="selectAllState"
+              (click)="selectAll()"
+              class="w-4 h-4 text-sky-600 bg-gray-100 border-gray-300 rounded focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label for="checkbox-all-search" class="sr-only">checkbox</label>
+          </div>
+        </th>
+        <th
+          *ngFor="let col of columns"
+          scope="col"
+          class="px-6 py-3"
+          [class.hidden]="col.property !== fixedColumn"
+          [ngClass]="{
+            hidden: col.property !== fixedColumn,
+            'md:table-cell': col.property !== fixedColumn
+          }"
+        >
+          {{ col.name }}
+        </th>
+        <th *ngIf="action" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let value of data; let i = index"
+        class="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        [class.bg-sky-50]="selecteds.get(value.id)"
+        [class.bg-white]="!selecteds.get(value.id)"
+      >
+        <td *ngIf="activeSelection" class="w-4 p-4">
+          <div class="flex items-center">
+            <input
+              id="checkbox-table-search-1"
+              type="checkbox"
+              (ngModelChange)="selectRow(value.id)"
+              [ngModel]="selecteds.get(value.id)"
+              class="w-4 h-4 text-sky-600 bg-gray-100 border-gray-300 rounded focus:ring-sky-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label for="checkbox-table-search-1" class="sr-only"
+              >checkbox</label
+            >
+          </div>
+        </td>
+        <div *ngFor="let col of columns" class="contents">
+          <td
+            scope="row"
+            class="px-2 py-4 font-medium text-gray-900 whitespace-normal md:whitespace-nowrap dark:text-white"
+            [ngClass]="{
+                    hidden: col.property !== fixedColumn,
+                    'md:table-cell': col.property !== fixedColumn,
+                    'font-medium text-gray-900 whitespace-normal md:whitespace-nowrap dark:text-white': col.property === fixedColumn,
+                  }"
+          >
+            {{ value[col.property] }}
+          </td>
+        </div>
+
+        <td *ngIf="action" class="text-right pr-4">
+          <div class="w-full flex justify-end">
+            <button
+              (click)="setMobileViewIndex(i)"
+              class="shadow-sm p-1 hover:bg-gray-100 rounded-md md:hidden"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#0284c7"
+              >
+                <path
+                  d="M160-160q-33 0-56.5-23.5T80-240v-120h80v120h640v-480H160v120H80v-120q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm300-140-56-58 83-82H80v-80h407l-83-82 56-58 180 180-180 180Z"
+                />
+              </svg>
+            </button>
+            <button
+              (click)="handleActionButton(value.id)"
+              class="shadow-sm p-1 hover:bg-gray-100 rounded-md hidden md:block"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#0284c7"
+              >
+                <path
+                  d="M160-160q-33 0-56.5-23.5T80-240v-120h80v120h640v-480H160v120H80v-120q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm300-140-56-58 83-82H80v-80h407l-83-82 56-58 180 180-180 180Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <!-- Repeat the above <tr> structure for other rows, applying the same classes -->
+    </tbody>
+  </table>
+  <!-- Pagination code remains unchanged -->
+</div>
+<nav
+  class="flex gap-4 justify-between items-center py-4"
+  aria-label="Table navigation"
+>
+  <span class="text-sm font-normal text-gray-500 dark:text-gray-400"
+    >Pág.
+    <span class="font-semibold text-gray-900 dark:text-white">{{
+      currentPage
+    }}</span>
+    de
+    <span class="font-semibold text-gray-900 dark:text-white">{{
+      totalPages
+    }}</span></span
+  >
+  <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+    <li>
+      <button
+        [disabled]="currentPage === 1"
+        (click)="previousPage()"
+        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:bg-gray-200 disabled:cursor-not-allowed"
+      >
+        Anterior
+      </button>
+    </li>
+
+    <li>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:bg-gray-200 disabled:cursor-not-allowed"
+      >
+        Próxima
+      </button>
+    </li>
+  </ul>
+</nav>
+<div
+  id="menu"
+  (click)="toggleMenu()"
+  *ngIf="!hideMenu"
+  [class.touch-none]="hideMenu"
+  class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end md:flex md:static md:bg-transparent md:bg-opacity-0 md:items-start shadow"
+>
+  <div
+    (click)="$event.stopPropagation()"
+    class="w-full shadow p-2 bg-white md:bg-transparent"
+  >
+    <div
+      class="flex items-center justify-center p-2 border-b border-gray-900/10"
+    >
+      <h1 class="text-sm font-bold">Informações</h1>
+    </div>
+
+    <div class="p-4">
+      <div *ngFor="let col of columns" class="flex flex-col p-2">
+        <p class="text-sm font-medium text-gray-900 truncate">{{ col.name }}</p>
+        <p class="text-xs text-gray-500">
+          {{ data[mobileViewIndex][col.property] }}
+        </p>
+      </div>
+    </div>
+    <button
+      *ngIf="action"
+      (click)="handleActionButton(data[mobileViewIndex].id)"
+      class="shadow-md border border-gray-200 hover:bg-gray-100 rounded-md w-full flex justify-center p-2"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        fill="#0284c7"
+      >
+        <path
+          d="M160-160q-33 0-56.5-23.5T80-240v-120h80v120h640v-480H160v120H80v-120q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm300-140-56-58 83-82H80v-80h407l-83-82 56-58 180 180-180 180Z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
