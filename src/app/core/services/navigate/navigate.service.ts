@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 export class NavigateService {
   constructor(private router: Router) {}
 
-  goTo(route: string) {
-    this.router.navigate([route]);
+  goTo(route: string, state?: any) {
+    this.router.navigate([route], { state });
   }
 }

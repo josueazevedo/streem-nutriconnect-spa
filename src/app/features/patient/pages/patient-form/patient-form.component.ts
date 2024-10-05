@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
@@ -52,9 +52,36 @@ export class PatientFormComponent implements FormComponentGuard {
     private notify: NotificationService,
     private cepSearc: SearchCepService,
     private fb: FormBuilder,
-    private patientRepo: PatientRepositoryService
+    private patientRepo: PatientRepositoryService,
+    private location: Location
   ) {
     this.initForm();
+    console.log(this.location.getState());
+  }
+  ngOnInit(): void {
+    const state = this.location.getState() as { id: string };
+
+    if (state?.id) {
+      this.getPatient(state.id);
+      return;
+    }
+    this.initForm();
+  }
+
+  getPatient(id: string): void {
+    this.patientRepo.find(id).subscribe({
+      next: (patient) => {
+        this.initForm(patient.data);
+      },
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Verifique as informações e tente novamente'
+          );
+        }, error);
+      },
+    });
   }
 
   save(): void {

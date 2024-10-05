@@ -55,9 +55,9 @@ export class PatientListComponent {
       });
   }
 
-  navigateToPatient(index: string) {
+  navigateToPatient(id: string) {
     console.log(this.fixedColumn, 'aqui');
-    this.nav.goTo(PATIENT_ROUTES.form);
+    this.nav.goTo(PATIENT_ROUTES.form, { id });
   }
 
   handlePageChange(page: number) {
