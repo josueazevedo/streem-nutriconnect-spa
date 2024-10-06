@@ -10,11 +10,19 @@ import {
 import { Patient } from '../../models/patient.model';
 import { NavigateService } from '../../../../core/services/navigate/navigate.service';
 import { PATIENT_ROUTES } from '../../patient.routes';
+import { NewPatientDialogComponent } from '../../components/new-patient-dialog/new-patient-dialog.component';
+import { HeaderPatientComponent } from '../../components/header-patient/header-patient.component';
 
 @Component({
   selector: 'app-patient-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, DynamicTableComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DynamicTableComponent,
+    NewPatientDialogComponent,
+    HeaderPatientComponent,
+  ],
   templateUrl: './patient-list.component.html',
   styleUrl: './patient-list.component.scss',
 })
@@ -27,13 +35,14 @@ export class PatientListComponent {
       name: 'Nome',
     },
     {
-      property: 'phone_number',
+      property: 'phone',
       name: 'Telefone',
     },
   ];
   currentPage = 1;
   totalPages = 0;
   search: string = '';
+  showDialog = false;
 
   constructor(
     private patientService: PatientRepositoryService,
@@ -68,5 +77,13 @@ export class PatientListComponent {
   handleSearch() {
     this.currentPage = 1;
     this.getPatients();
+  }
+
+  openNewPatientDialog() {
+    this.showDialog = true;
+  }
+
+  navigateToNewPatient() {
+    this.nav.goTo(PATIENT_ROUTES.form);
   }
 }

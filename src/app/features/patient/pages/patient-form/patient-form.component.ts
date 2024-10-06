@@ -20,6 +20,7 @@ import { parseToFormData } from '../../../../core/helpers/parse-formdata.helper'
 import { FormComponentGuard } from '../../../../core/guards/form.guard';
 import { CapitalizeDirective } from '../../../../core/directives/captalize/capitalize.directive';
 import { PreventSpacesDirective } from '../../../../core/directives/preventSpaces/prevent-spaces.directive';
+import { HeaderPatientComponent } from '../../components/header-patient/header-patient.component';
 
 @Component({
   selector: 'app-patient-form',
@@ -33,6 +34,7 @@ import { PreventSpacesDirective } from '../../../../core/directives/preventSpace
     AlertComponent,
     CapitalizeDirective,
     PreventSpacesDirective,
+    HeaderPatientComponent,
   ],
   templateUrl: './patient-form.component.html',
   styleUrl: './patient-form.component.scss',
@@ -56,8 +58,8 @@ export class PatientFormComponent implements FormComponentGuard {
     private location: Location
   ) {
     this.initForm();
-    console.log(this.location.getState());
   }
+
   ngOnInit(): void {
     const state = this.location.getState() as { id: string };
 
@@ -217,4 +219,8 @@ export class PatientFormComponent implements FormComponentGuard {
   hasUnsavedChanges = () => {
     return this.form.dirty || this.imageUrl != null;
   };
+
+  onBack(): void {
+    this.location.back();
+  }
 }

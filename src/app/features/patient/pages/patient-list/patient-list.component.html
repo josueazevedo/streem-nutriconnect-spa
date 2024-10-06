@@ -1,3 +1,4 @@
+<app-header-patient [list]="['Consulta']" />
 <div class="flex gap-4 justify-between">
   <div class="max-w-md mb-4 w-full">
     <label
@@ -45,7 +46,7 @@
   </div>
   <button
     type="submit"
-    (click)="handleSearch()"
+    (click)="openNewPatientDialog()"
     class="mt-2 md:max-w-48 justify-center rounded-md bg-sky-600 font-medium px-3 h-[36px] text-sm leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
   >
     Novo
@@ -61,4 +62,9 @@
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="handlePageChange($event)"
+/>
+<app-new-patient-dialog
+  [show]="showDialog"
+  (closeModel)="showDialog = false"
+  (internalForm)="navigateToNewPatient()"
 />

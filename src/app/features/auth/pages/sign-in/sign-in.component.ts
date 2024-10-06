@@ -31,6 +31,9 @@ export class SignInComponent {
     private readonly navigate: NavigateService
   ) {
     this.initForm();
+    this.form.get('username')?.setValue('a@a.com');
+    this.form.get('password')?.setValue('Jlotus500j?');
+    this.login();
   }
 
   login() {

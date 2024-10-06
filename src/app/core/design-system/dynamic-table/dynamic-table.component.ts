@@ -92,5 +92,6 @@ export function rowsPerPageDynamicTable(
   const rowHeight = 53;
   const availableHeight = screenHeight - headerHeight;
 
-  return Math.floor(availableHeight / rowHeight);
+  const rows = Math.floor(availableHeight / rowHeight);
+  return rows === 0 ? 1 : rows;
 }

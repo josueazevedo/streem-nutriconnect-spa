@@ -31,7 +31,7 @@ export const CoreRoutes: Routes = [
       },
       {
         path: PATIENT_MODULE_PATH,
-        // canActivate: [AuthGuard, ActivedGuard, VerifiedGuard],
+        canActivate: [AuthGuard, ActivedGuard, VerifiedGuard],
         loadChildren: () =>
           import('../features/patient/patient.routes').then(
             (m) => m.PatientRoutes
