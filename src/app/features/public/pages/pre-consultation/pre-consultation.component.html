@@ -1,0 +1,167 @@
+<form class="mt-4" [formGroup]="form">
+  <div class="flex flex-col gap-4">
+    <div class="w-full border-b border-gray-900/10 mb-4 pb-10">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:basis-1/3 flex flex-col md:w-12">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            Dados Pessoais
+          </p>
+          <p class="text-xs text-gray-500">
+            Suas informações de identificação e contato
+          </p>
+        </div>
+        <div class="md:basis-2/3 w-full">
+          <div class="space-y-6">
+            <div>
+              <label
+                for="nome"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Nome<span class="text-gray-400 text-xs">*</span></label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  appCapitalize
+                  appPreventSpaces
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="off"
+                  required
+                  formControlName="name"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
+                />
+                <div
+                  class="mt-2 md:max-w-md"
+                  *ngIf="
+                    form.get('name')?.invalid &&
+                    (form.get('name')?.dirty || form.get('name')?.touched)
+                  "
+                >
+                  <app-alert type="basic" [message]="getErrorMessage('name')" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                for="birth"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Data de nascimento<span class="text-gray-400 text-xs"
+                  >*</span
+                ></label
+              >
+              <div class="mt-2 md:max-w-md">
+                <dss-datepicker formControlName="date_of_birth" />
+                <div
+                  class="mt-2 md:max-w-md"
+                  *ngIf="
+                    form.get('date_of_birth')?.invalid &&
+                    (form.get('date_of_birth')?.dirty ||
+                      form.get('date_of_birth')?.touched)
+                  "
+                >
+                  <app-alert
+                    type="basic"
+                    [message]="getErrorMessage('date_of_birth')"
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                for="gender"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Gênero<span class="text-gray-400 text-xs">*</span></label
+              >
+              <div class="mt-2 md:max-w-md">
+                <dss-dropdown [options]="sexOptons" formControlName="gender" />
+                <div
+                  class="mt-2 md:max-w-md"
+                  *ngIf="
+                    form.get('gender')?.invalid &&
+                    (form.get('gender')?.dirty || form.get('gender')?.touched)
+                  "
+                >
+                  <app-alert
+                    type="basic"
+                    [message]="getErrorMessage('gender')"
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Telefone<span class="text-gray-400 text-xs">*</span></label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  autocomplete="off"
+                  mask="(00) 00000-0000"
+                  required
+                  formControlName="phone_number"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+              <div
+                class="mt-2 md:max-w-md"
+                *ngIf="
+                  form.get('phone_number')?.invalid &&
+                  (form.get('phone_number')?.dirty ||
+                    form.get('phone_number')?.touched)
+                "
+              >
+                <app-alert
+                  type="basic"
+                  [message]="getErrorMessage('phone_number')"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Email</label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="email"
+                  name="email"
+                  type="text"
+                  autocomplete="off"
+                  formControlName="email"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
+                />
+                <div
+                  class="mt-2 md:max-w-md"
+                  *ngIf="
+                    form.get('email')?.invalid &&
+                    (form.get('email')?.dirty || form.get('email')?.touched)
+                  "
+                >
+                  <app-alert
+                    type="basic"
+                    [message]="getErrorMessage('email')"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center pb-4">
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      (click)="create()"
+      class="flex w-full md:max-w-48 justify-center rounded-md bg-sky-600 font-medium px-3 py-1.5 text-sm leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+    >
+      Salvar
+    </button>
+  </div>
+</form>
