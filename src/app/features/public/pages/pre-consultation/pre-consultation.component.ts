@@ -57,12 +57,7 @@ export class PreConsultationComponent {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (!id) {
-      this.navigate.goTo(AUTH_ROUTES.forbidden);
-      return;
-    }
-    this.formId = id!;
+    this.validatePreConsultation();
   }
 
   initForm() {
@@ -72,6 +67,23 @@ export class PreConsultationComponent {
       phone_number: [null, [Validators.required]],
       date_of_birth: [null, [Validators.required]],
       gender: [null, [Validators.required]],
+    });
+  }
+
+  validatePreConsultation(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) {
+      this.navigate.goTo(AUTH_ROUTES.forbidden);
+      return;
+    }
+    this.formId = id!;
+    this.repo.getPreConsultation(this.formId).subscribe({
+      next: () => {},
+      error: (error) => {
+        errorNotify(() => {
+          this.navigate.goTo(AUTH_ROUTES.forbidden);
+        }, error);
+      },
     });
   }
 

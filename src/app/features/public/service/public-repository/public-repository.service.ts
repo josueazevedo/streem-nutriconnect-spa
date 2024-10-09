@@ -19,6 +19,10 @@ export class PublicRepositoryService {
       input
     );
   }
+
+  getPreConsultation(form_id: string): Observable<Response> {
+    return this.http.get<Response>(URL_PUBLIC.PRE_CONSULTATION(form_id));
+  }
 }
 
 export type PreConsultationModel = {
