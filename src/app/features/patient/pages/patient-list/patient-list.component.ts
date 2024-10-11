@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PatientRepositoryService } from './../../services/patient/patient-repository.service';
+import { PatientRepositoryService } from '../../services/patient-repository/patient-repository.service';
 import { Component } from '@angular/core';
 import {
   DynamicTableColumn,
@@ -12,6 +12,11 @@ import { NavigateService } from '../../../../core/services/navigate/navigate.ser
 import { PATIENT_ROUTES } from '../../patient.routes';
 import { NewPatientDialogComponent } from '../../components/new-patient-dialog/new-patient-dialog.component';
 import { HeaderPatientComponent } from '../../components/header-patient/header-patient.component';
+import { PatientService } from '../../services/patient/patient.service';
+import { errorNotify } from '../../../../core/helpers/error-notify.helper';
+import { NotificationService } from '../../../../core/services/notification/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ExternalPatientDialogComponent } from '../../components/external-patient-dialog/external-patient-dialog.component';
 
 @Component({
   selector: 'app-patient-list',
@@ -22,6 +27,7 @@ import { HeaderPatientComponent } from '../../components/header-patient/header-p
     DynamicTableComponent,
     NewPatientDialogComponent,
     HeaderPatientComponent,
+    ExternalPatientDialogComponent,
   ],
   templateUrl: './patient-list.component.html',
   styleUrl: './patient-list.component.scss',
@@ -43,10 +49,14 @@ export class PatientListComponent {
   totalPages = 0;
   search: string = '';
   showDialog = false;
+  showExternalDialog = false;
+  formId: string = '';
 
   constructor(
-    private patientService: PatientRepositoryService,
-    private nav: NavigateService
+    private patientRepository: PatientRepositoryService,
+    private patientService: PatientService,
+    private nav: NavigateService,
+    private notify: NotificationService
   ) {}
 
   ngOnInit() {
@@ -55,7 +65,7 @@ export class PatientListComponent {
 
   getPatients() {
     const limit = rowsPerPageDynamicTable(70);
-    this.patientService
+    this.patientRepository
       .findAll(this.currentPage, limit, this.search)
       .subscribe((res) => {
         this.list = res.data.items;
@@ -85,5 +95,20 @@ export class PatientListComponent {
 
   navigateToNewPatient() {
     this.nav.goTo(PATIENT_ROUTES.form);
+  }
+
+  createExternalForm() {
+    this.patientService.createExternalForm().subscribe({
+      next: (res) => {
+        this.showDialog = false;
+        this.formId = res.data;
+        this.showExternalDialog = true;
+      },
+      error: (error: HttpErrorResponse) => {
+        errorNotify(() => {
+          this.notify.addNotification('warning', error.error.message);
+        }, error);
+      },
+    });
   }
 }

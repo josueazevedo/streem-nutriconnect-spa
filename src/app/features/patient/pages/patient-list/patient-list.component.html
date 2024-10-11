@@ -67,4 +67,9 @@
   [show]="showDialog"
   (closeModel)="showDialog = false"
   (internalForm)="navigateToNewPatient()"
+  (externalForm)="createExternalForm()"
+/>
+<app-external-patient-dialog
+  [showDialog]="showExternalDialog"
+  [form]="formId"
 />

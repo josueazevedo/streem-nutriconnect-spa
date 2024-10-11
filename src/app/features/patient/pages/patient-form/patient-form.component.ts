@@ -14,7 +14,7 @@ import { Patient } from '../../models/patient.model';
 import { DatepickerComponent } from '../../../../core/design-system/datepicker/datepicker.component';
 import { AlertComponent } from '../../../../core/components/alert/alert.component';
 import { parseFormErrorMessage } from '../../../../core/helpers/form-error-message.helper';
-import { PatientRepositoryService } from '../../services/patient/patient-repository.service';
+import { PatientRepositoryService } from '../../services/patient-repository/patient-repository.service';
 import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 import { parseToFormData } from '../../../../core/helpers/parse-formdata.helper';
 import { FormComponentGuard } from '../../../../core/guards/form.guard';

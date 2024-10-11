@@ -5,4 +5,6 @@ export const URL_PATIENT = {
   FIND: (id: string) => `${BASE_PATH}/${id}`,
   DELETE: (id: string) => `${BASE_PATH}/${id}`,
   FIND_ALL: `${BASE_PATH}`,
+
+  CREATE_EXTERNAL_FORM: `/api/record/external/pre-consultation`,
 };
