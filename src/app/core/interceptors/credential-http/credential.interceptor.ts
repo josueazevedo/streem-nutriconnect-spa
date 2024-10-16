@@ -25,7 +25,6 @@ export const credentialInterceptor: HttpInterceptorFn = (request, next) => {
   return next(request).pipe(
     tap((event: HttpEvent<any>) => {
       if (event.type === HttpEventType.Response) {
-        // HttpEventType.Response
         const accessToken = event.headers.get('access-token');
         const refreshToken = event.headers.get('refresh-token');
         if (accessToken && refreshToken) {

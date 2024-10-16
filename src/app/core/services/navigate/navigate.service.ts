@@ -10,4 +10,8 @@ export class NavigateService {
   goTo(route: string, state?: any) {
     this.router.navigate([route], { state });
   }
+
+  toLogin() {
+    this.router.navigate(['/login']);
+  }
 }

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
+import { AlertComponent } from '../../../../core/components/alert/alert.component';
 
 @Component({
   selector: 'app-external-patient-dialog',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AlertComponent],
   templateUrl: './external-patient-dialog.component.html',
   styleUrl: './external-patient-dialog.component.scss',
 })
@@ -15,6 +16,9 @@ export class ExternalPatientDialogComponent implements OnInit {
   @Input()
   form: string = '';
   private msgClipboard: string = '';
+  copyAlert: boolean = false;
+  copyAlertMessage: string = '';
+  copyAlertType: string = 'info';
 
   constructor(private notify: NotificationService) {}
   ngOnInit(): void {
@@ -28,6 +32,8 @@ export class ExternalPatientDialogComponent implements OnInit {
   }
 
   toWhatsapp(): void {
+    this.copyAlert = false;
+
     window.open(
       `https://api.whatsapp.com/send?text=${this.msgClipboard.replaceAll(
         '\n',
@@ -38,29 +44,24 @@ export class ExternalPatientDialogComponent implements OnInit {
   }
 
   toClipboard(): void {
+    this.copyAlert = false;
     if (!navigator.clipboard) {
       try {
         this.fallback(this.msgClipboard);
         this.showDialog = false;
-        this.notify.addNotification('success', 'Link copiado!');
+        this.showCopyAlertSuccess();
       } catch (error) {
-        this.notify.addNotification(
-          'warning',
-          'Falha ao copiar, tente novamente'
-        );
+        this.showCopyAlertError();
       }
       return;
     }
     navigator.clipboard
       .writeText(this.msgClipboard)
       .then(() => {
-        this.notify.addNotification('success', 'Link copiado!');
+        this.showCopyAlertSuccess();
       })
       .catch((error) => {
-        this.notify.addNotification(
-          'warning',
-          'Falha ao copiar, tente novamente'
-        );
+        this.showCopyAlertError();
       });
   }
 
@@ -89,4 +90,16 @@ export class ExternalPatientDialogComponent implements OnInit {
 
     document.body.removeChild(textarea);
   };
+
+  showCopyAlertSuccess(): void {
+    this.copyAlert = true;
+    this.copyAlertMessage = 'Link copiado com sucesso';
+    this.copyAlertType = 'info';
+  }
+
+  showCopyAlertError(): void {
+    this.copyAlert = true;
+    this.copyAlertMessage = 'Falha ao copiar, tente novamente';
+    this.copyAlertType = 'warning';
+  }
 }
