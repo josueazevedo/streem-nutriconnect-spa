@@ -55,7 +55,7 @@
 
 <dss-dynamic-table
   [action]="true"
-  (actionButton)="navigateToPatient($event)"
+  (actionButton)="handleSelect($event)"
   [fixedColumn]="fixedColumn"
   [data]="list"
   [columns]="columns"
@@ -63,13 +63,21 @@
   [totalPages]="totalPages"
   (pageChange)="handlePageChange($event)"
 />
+
+<app-external-patient-dialog
+  [showDialog]="showExternalDialog"
+  [form]="formId"
+/>
+<app-patient-action-dialog
+  [show]="showActionDialog"
+  [name]="selectedPatient?.name"
+  (closeModel)="showActionDialog = false"
+  (toForm)="navigateToPatient()"
+  (toRecord)="navigateToRecord()"
+/>
 <app-new-patient-dialog
   [show]="showDialog"
   (closeModel)="showDialog = false"
   (internalForm)="navigateToNewPatient()"
   (externalForm)="createExternalForm()"
-/>
-<app-external-patient-dialog
-  [showDialog]="showExternalDialog"
-  [form]="formId"
 />

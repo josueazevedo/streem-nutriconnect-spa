@@ -17,6 +17,7 @@ import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ExternalPatientDialogComponent } from '../../components/external-patient-dialog/external-patient-dialog.component';
+import { PatientActionDialogComponent } from '../../components/patient-action-dialog/patient-action-dialog.component';
 
 @Component({
   selector: 'app-patient-list',
@@ -28,12 +29,14 @@ import { ExternalPatientDialogComponent } from '../../components/external-patien
     NewPatientDialogComponent,
     HeaderPatientComponent,
     ExternalPatientDialogComponent,
+    PatientActionDialogComponent,
   ],
   templateUrl: './patient-list.component.html',
   styleUrl: './patient-list.component.scss',
 })
 export class PatientListComponent {
   list: Patient[] = [];
+  selectedPatient: Patient | null = null;
   fixedColumn = 'name';
   columns: DynamicTableColumn[] = [
     {
@@ -51,6 +54,7 @@ export class PatientListComponent {
   showDialog = false;
   showExternalDialog = false;
   formId: string = '';
+  showActionDialog = false;
 
   constructor(
     private patientRepository: PatientRepositoryService,
@@ -74,9 +78,18 @@ export class PatientListComponent {
       });
   }
 
-  navigateToPatient(id: string) {
-    console.log(this.fixedColumn, 'aqui');
-    this.nav.goTo(PATIENT_ROUTES.form, { id });
+  handleSelect(id: string) {
+    const patient = this.list.find((patient) => patient.id === id) || null;
+    this.selectedPatient = patient;
+    this.showActionDialog = true;
+  }
+
+  navigateToPatient() {
+    this.nav.goTo(PATIENT_ROUTES.form, { id: this.selectedPatient?.id });
+  }
+
+  navigateToRecord() {
+    this.nav.goTo(PATIENT_ROUTES.form);
   }
 
   handlePageChange(page: number) {

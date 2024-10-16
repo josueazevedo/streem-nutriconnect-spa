@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { NotificationService } from '../../../../core/services/notification/notification.service';
 import { AlertComponent } from '../../../../core/components/alert/alert.component';
 
 @Component({
@@ -20,12 +19,11 @@ export class ExternalPatientDialogComponent implements OnInit {
   copyAlertMessage: string = '';
   copyAlertType: string = 'info';
 
-  constructor(private notify: NotificationService) {}
+  constructor() {}
+
   ngOnInit(): void {
     this.msgClipboard = `Bem-vindo(a)! \n\nPara que possamos aproveitar ao máximo nossa consulta e focar nas suas principais necessidades, pedimos que preencha um breve formulário antes de nosso encontro.\n\nBasta clicar no link abaixo e fornecer as informações. Estou aqui para te apoiar em cada passo da sua jornada!\n\n http://localhost:4200/public/pre-consulta/${this.form}`;
   }
-
-  onConfirm(): void {}
 
   onClose(): void {
     this.showDialog = false;
