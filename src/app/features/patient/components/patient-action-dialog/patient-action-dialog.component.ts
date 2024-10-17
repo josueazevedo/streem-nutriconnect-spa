@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TwoWordsPipe } from '../../../../pipes/two-words.pipe';
+import { TwoWordsPipe } from '../../../../shared/pipes/two-words/two-words.pipe';
 
 @Component({
   selector: 'app-patient-action-dialog',

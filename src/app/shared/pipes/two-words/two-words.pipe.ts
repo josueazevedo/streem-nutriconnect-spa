@@ -2,12 +2,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'twoWords',
-  standalone: true
+  standalone: true,
 })
 export class TwoWordsPipe implements PipeTransform {
+  transform(value: string): string {
+    if (!value) return '';
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+    const words = value.split(' ');
+    return words.slice(0, 2).join(' ');
   }
-
 }

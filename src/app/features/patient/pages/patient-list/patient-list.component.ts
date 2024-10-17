@@ -18,6 +18,7 @@ import { NotificationService } from '../../../../core/services/notification/noti
 import { HttpErrorResponse } from '@angular/common/http';
 import { ExternalPatientDialogComponent } from '../../components/external-patient-dialog/external-patient-dialog.component';
 import { PatientActionDialogComponent } from '../../components/patient-action-dialog/patient-action-dialog.component';
+import { RECORD_ROUTES } from '../../../record/record.routes';
 
 @Component({
   selector: 'app-patient-list',
@@ -89,7 +90,7 @@ export class PatientListComponent {
   }
 
   navigateToRecord() {
-    this.nav.goTo(PATIENT_ROUTES.form);
+    this.nav.goTo(RECORD_ROUTES.assessment, { id: this.selectedPatient?.id });
   }
 
   handlePageChange(page: number) {
