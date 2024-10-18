@@ -20,6 +20,8 @@
     "@angular/router": "^17.0.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tuya/tuya-connector-nodejs": "^2.1.2",
+    "apexcharts": "^3.54.1",
+    "ng-apexcharts": "^1.12.0",
     "ngx-mask": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

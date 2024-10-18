@@ -76,6 +76,9 @@ export class PatientListComponent {
         this.list = res.data.items;
         this.totalPages = res.data.pages;
         this.search = '';
+        //temp
+        this.selectedPatient = this.list[0];
+        this.navigateToRecord();
       });
   }
 
