@@ -12,6 +12,8 @@ import {
 import { AssessmentDialogComponent } from '../../components/assessment-dialog/assessment-dialog.component';
 import { AssessmentRepositoryService } from '../../services/assessment-repository/assessment-repository.service';
 import { Assessment } from '../../models/assessment.model';
+import { errorNotify } from '../../../../core/helpers/error-notify.helper';
+import { NotificationService } from '../../../../core/services/notification/notification.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -40,7 +42,8 @@ export class RecordAssessmentComponent {
 
   constructor(
     private location: Location,
-    private assessmentRepo: AssessmentRepositoryService
+    private assessmentRepo: AssessmentRepositoryService,
+    private notify: NotificationService
   ) {
     this.chartOptions = {
       series: [
@@ -84,7 +87,6 @@ export class RecordAssessmentComponent {
       this.id = state.id;
       return;
     }
-    // this.initForm();
   }
 
   showFormDialog(): void {
@@ -93,11 +95,17 @@ export class RecordAssessmentComponent {
 
   create(input: Assessment): void {
     this.assessmentRepo.create({ ...input, patient_id: this.id }).subscribe({
-      next: (res) => {
-        console.log(res);
+      next: () => {
+        this.hideFormDialog = false;
+        this.notify.addNotification('success', 'Avaliação criada com sucesso');
       },
-      error: (err) => {
-        console.log(err);
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Verifique as informações digitadas'
+          );
+        }, error);
       },
     });
   }

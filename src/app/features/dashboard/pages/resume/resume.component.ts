@@ -10,6 +10,6 @@ import { NavigateService } from '../../../../core/services/navigate/navigate.ser
 })
 export class ResumeComponent {
   constructor(private nav: NavigateService) {
-    this.nav.goTo('/patients');
+    // this.nav.goTo('/patients');
   }
 }

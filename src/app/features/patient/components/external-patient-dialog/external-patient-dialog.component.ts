@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertComponent } from '../../../../core/components/alert/alert.component';
 
 @Component({
@@ -11,13 +11,13 @@ import { AlertComponent } from '../../../../core/components/alert/alert.componen
 })
 export class ExternalPatientDialogComponent implements OnInit {
   @Input()
-  showDialog: boolean = true;
-  @Input()
   form: string = '';
   private msgClipboard: string = '';
   copyAlert: boolean = false;
   copyAlertMessage: string = '';
   copyAlertType: string = 'info';
+  @Output()
+  onClose = new EventEmitter();
 
   constructor() {}
 
@@ -25,8 +25,8 @@ export class ExternalPatientDialogComponent implements OnInit {
     this.msgClipboard = `Bem-vindo(a)! \n\nPara que possamos aproveitar ao máximo nossa consulta e focar nas suas principais necessidades, pedimos que preencha um breve formulário antes de nosso encontro.\n\nBasta clicar no link abaixo e fornecer as informações. Estou aqui para te apoiar em cada passo da sua jornada!\n\n http://localhost:4200/public/pre-consulta/${this.form}`;
   }
 
-  onClose(): void {
-    this.showDialog = false;
+  handerClose(): void {
+    this.onClose.emit();
   }
 
   toWhatsapp(): void {
@@ -46,7 +46,7 @@ export class ExternalPatientDialogComponent implements OnInit {
     if (!navigator.clipboard) {
       try {
         this.fallback(this.msgClipboard);
-        this.showDialog = false;
+        this.handerClose();
         this.showCopyAlertSuccess();
       } catch (error) {
         this.showCopyAlertError();

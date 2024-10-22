@@ -67,6 +67,8 @@ export class PreConsultationComponent {
       phone_number: [null, [Validators.required]],
       date_of_birth: [null, [Validators.required]],
       gender: [null, [Validators.required]],
+      weight: [null, [Validators.required]],
+      height: [null, [Validators.required]],
     });
   }
 
@@ -102,10 +104,7 @@ export class PreConsultationComponent {
       },
       error: (error) => {
         errorNotify(() => {
-          this.notify.addNotification(
-            'warning',
-            'Verifique as informações digitadas'
-          );
+          this.notify.addNotification('warning', error.error.message);
         }, error);
       },
     });

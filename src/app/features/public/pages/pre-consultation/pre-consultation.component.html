@@ -153,6 +153,84 @@
         </div>
       </div>
     </div>
+    <div class="w-full border-b border-gray-900/10 mb-4 pb-10">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:basis-1/3 flex flex-col md:w-12">
+          <p class="text-sm font-medium text-gray-900 truncate">
+            Avaliação Física
+          </p>
+          <p class="text-xs text-gray-500">
+            Suas informações de condicionamento físico
+          </p>
+        </div>
+        <div class="md:basis-2/3 w-full">
+          <div class="space-y-6">
+            <div>
+              <label
+                for="weight"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Peso<span class="text-gray-400 text-xs">*</span></label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="weight"
+                  name="weight"
+                  type="tel"
+                  autocomplete="off"
+                  required
+                  formControlName="weight"
+                  [mask]="'separator.2'"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
+                />
+                <div
+                  class="mt-2 md:max-w-md"
+                  *ngIf="
+                    form.get('weight')?.invalid &&
+                    (form.get('weight')?.dirty || form.get('weight')?.touched)
+                  "
+                >
+                  <app-alert
+                    type="basic"
+                    [message]="getErrorMessage('weight')"
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                for="height"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Altura<span class="text-gray-400 text-xs">*</span></label
+              >
+              <div class="mt-2 md:max-w-md">
+                <input
+                  id="height"
+                  name="height"
+                  type="tel"
+                  autocomplete="off"
+                  required
+                  formControlName="height"
+                  [mask]="'separator.2'"
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
+                />
+                <div
+                  class="mt-2 md:max-w-md"
+                  *ngIf="
+                    form.get('height')?.invalid &&
+                    (form.get('height')?.dirty || form.get('height')?.touched)
+                  "
+                >
+                  <app-alert
+                    type="basic"
+                    [message]="getErrorMessage('height')"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="flex justify-center pb-4">
     <button

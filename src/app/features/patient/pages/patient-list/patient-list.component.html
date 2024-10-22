@@ -65,7 +65,8 @@
 />
 
 <app-external-patient-dialog
-  [showDialog]="showExternalDialog"
+  *ngIf="showExternalDialog"
+  (onClose)="showExternalDialog = false"
   [form]="formId"
 />
 <app-patient-action-dialog
