@@ -10,14 +10,14 @@
     <!-- Cabeçalho fixo -->
     <div class="flex justify-between items-center border-b pb-3">
       <h3 class="text-xl font-semibold">Avaliação física</h3>
-      <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+      <button (click)="close()" class="text-gray-500 hover:text-gray-700">
         &times;
       </button>
     </div>
 
     <!-- Corpo rolável -->
     <div class="mt-4 overflow-y-auto flex-grow">
-      <form>
+      <form [formGroup]="form">
         <div class="flex flex-col mb-2">
           <p class="text-sm font-medium text-gray-900 truncate">
             Relação entre peso e altura
@@ -26,53 +26,63 @@
             Usado para identificar faixas de peso saudável.
           </p>
         </div>
-        <div class="grid gap-4 grid-cols-2 mb-4">
-          <div class="col-span-2 sm:col-span-1">
+        <div class="grid gap-4 md:gap-[12px] grid-cols-2 mb-4 md:w-[50%]">
+          <div class="col-span-2 sm:col-span-1 md:max-w-[200px]">
             <label
               for="height"
               class="block text-sm font-medium leading-6 text-gray-900"
               >Altura<span class="text-gray-400 text-xs">*</span></label
             >
-            <div class="mt-1">
+            <div class="mt-1 md:max-w-[200px]">
               <input
                 appCapitalize
                 appPreventSpaces
                 id="height"
                 name="height"
-                type="text"
+                type="tel"
                 autocomplete="off"
                 formControlName="height"
+                [mask]="'separator.2'"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
               />
-              <div class="mt-1">
-                <!-- <app-alert type="basic" [message]="getErrorMessage('name')" /> -->
-              </div>
             </div>
           </div>
-          <div class="col-span-2 sm:col-span-1">
+          <div class="col-span-2 sm:col-span-1 md:max-w-[200px]">
             <label
               for="weight"
               class="block text-sm font-medium leading-6 text-gray-900"
               >Peso<span class="text-gray-400 text-xs">*</span></label
             >
-            <div class="mt-1">
+            <div class="mt-1 md:max-w-[200px]">
               <input
                 appCapitalize
                 appPreventSpaces
                 id="weight"
                 name="weight"
-                type="text"
+                type="tel"
                 autocomplete="off"
                 formControlName="weight"
+                [mask]="'separator.2'"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
               />
-              <div class="mt-1">
-                <!-- <app-alert type="basic" [message]="getErrorMessage('name')" /> -->
-              </div>
             </div>
           </div>
         </div>
-        <p class="border-b border-gray-900/10 mb-4"></p>
+        <div
+          class="mt-2 mb-2"
+          *ngIf="
+            (form.get('height')?.invalid &&
+              (form.get('height')?.dirty || form.get('height')?.touched)) ||
+            (form.get('weight')?.invalid &&
+              (form.get('weight')?.dirty || form.get('weight')?.touched))
+          "
+        >
+          <app-alert
+            type="basic"
+            message="Altura e peso são informações obrigatórias"
+          />
+        </div>
+        <p class="border-b border-gray-900/10 mb-3"></p>
         <div class="grid gap-4 grid-cols-2">
           <div class="col-span-2 sm:col-span-1">
             <div class="flex flex-col mb-2">
@@ -88,7 +98,7 @@
                 <label
                   for="abdominal"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Abdominal<span class="text-gray-400 text-xs">*</span></label
+                  >Abdominal</label
                 >
                 <div class="mt-1">
                   <input
@@ -96,9 +106,10 @@
                     appPreventSpaces
                     id="abdominal"
                     name="abdominal"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="abdominal"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -107,7 +118,7 @@
                 <label
                   for="peito"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Peito<span class="text-gray-400 text-xs">*</span></label
+                  >Peito</label
                 >
                 <div class="mt-1">
                   <input
@@ -115,9 +126,10 @@
                     appPreventSpaces
                     id="peito"
                     name="peito"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="peito"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -126,7 +138,7 @@
                 <label
                   for="coxa"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Coxa<span class="text-gray-400 text-xs">*</span></label
+                  >Coxa</label
                 >
                 <div class="mt-1">
                   <input
@@ -134,9 +146,10 @@
                     appPreventSpaces
                     id="coxa"
                     name="coxa"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="coxa"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -145,7 +158,7 @@
                 <label
                   for="triceps"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Triceos<span class="text-gray-400 text-xs">*</span></label
+                  >Triceos</label
                 >
                 <div class="mt-1">
                   <input
@@ -153,9 +166,10 @@
                     appPreventSpaces
                     id="triceps"
                     name="triceps"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="triceps"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -164,9 +178,7 @@
                 <label
                   for="subescapular"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Subescapular<span class="text-gray-400 text-xs"
-                    >*</span
-                  ></label
+                  >Subescapular</label
                 >
                 <div class="mt-1">
                   <input
@@ -174,9 +186,10 @@
                     appPreventSpaces
                     id="subescapular"
                     name="subescapular"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="subescapular"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -185,9 +198,7 @@
                 <label
                   for="suprailiaca"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Suprailiaca<span class="text-gray-400 text-xs"
-                    >*</span
-                  ></label
+                  >Suprailiaca</label
                 >
                 <div class="mt-1">
                   <input
@@ -195,9 +206,10 @@
                     appPreventSpaces
                     id="suprailiaca"
                     name="suprailiaca"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="suprailiaca"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -206,9 +218,7 @@
                 <label
                   for="axilar_media"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Axilar média<span class="text-gray-400 text-xs"
-                    >*</span
-                  ></label
+                  >Axilar média</label
                 >
                 <div class="mt-1">
                   <input
@@ -216,9 +226,10 @@
                     appPreventSpaces
                     id="axilar_media"
                     name="axilar_media"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="axilar_media"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -232,7 +243,7 @@
                 Medidas de circunferências
               </p>
               <p class="text-xs text-gray-500">
-                Importante indicadores de riscos à saúde
+                Importantes indicadores de riscos à saúde
               </p>
             </div>
             <div class="grid gap-4 grid-cols-2 mt-2">
@@ -240,7 +251,7 @@
                 <label
                   for="cintura"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Cintura<span class="text-gray-400 text-xs">*</span></label
+                  >Cintura</label
                 >
                 <div class="mt-1">
                   <input
@@ -248,9 +259,10 @@
                     appPreventSpaces
                     id="cintura"
                     name="cintura"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="cintura"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -259,7 +271,7 @@
                 <label
                   for="quadril"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Quadril<span class="text-gray-400 text-xs">*</span></label
+                  >Quadril</label
                 >
                 <div class="mt-1">
                   <input
@@ -267,9 +279,10 @@
                     appPreventSpaces
                     id="quadril"
                     name="quadril"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="quadril"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -278,7 +291,7 @@
                 <label
                   for="braco"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Braço<span class="text-gray-400 text-xs">*</span></label
+                  >Braço</label
                 >
                 <div class="mt-1">
                   <input
@@ -286,9 +299,10 @@
                     appPreventSpaces
                     id="braco"
                     name="braco"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="braco"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -297,9 +311,7 @@
                 <label
                   for="panturrilha"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Panturrilha<span class="text-gray-400 text-xs"
-                    >*</span
-                  ></label
+                  >Panturrilha</label
                 >
                 <div class="mt-1">
                   <input
@@ -307,9 +319,10 @@
                     appPreventSpaces
                     id="panturrilha"
                     name="panturrilha"
-                    type="text"
+                    type="tel"
                     autocomplete="off"
                     formControlName="panturrilha"
+                    [mask]="'separator.2'"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -321,12 +334,13 @@
     </div>
 
     <!-- Rodapé fixo -->
-    <div class="flex justify-end mt-4 border-t pt-3">
+    <div class="flex justify-center mt-4 border-t pt-3">
       <button
-        onclick="closeModal()"
-        class="bg-red-500 text-white px-4 py-2 rounded-lg"
+        type="submit"
+        (click)="save()"
+        class="flex w-full md:max-w-48 justify-center rounded-md bg-sky-600 font-medium px-3 py-1.5 text-sm leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        Fechar
+        Salvar
       </button>
     </div>
   </div>

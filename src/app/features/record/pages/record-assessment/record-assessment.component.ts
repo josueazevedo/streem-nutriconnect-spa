@@ -10,6 +10,8 @@ import {
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { AssessmentDialogComponent } from '../../components/assessment-dialog/assessment-dialog.component';
+import { AssessmentRepositoryService } from '../../services/assessment-repository/assessment-repository.service';
+import { Assessment } from '../../models/assessment.model';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -32,10 +34,14 @@ export type ChartOptions = {
 })
 export class RecordAssessmentComponent {
   hideMenu: boolean = true;
-  // @ViewChild('chart') chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  chartOptions: Partial<ChartOptions>;
+  hideFormDialog: boolean = false;
+  id: string = '';
 
-  constructor(private location: Location) {
+  constructor(
+    private location: Location,
+    private assessmentRepo: AssessmentRepositoryService
+  ) {
     this.chartOptions = {
       series: [
         {
@@ -75,9 +81,25 @@ export class RecordAssessmentComponent {
 
     if (state?.id) {
       // this.getPatient(state.id);
+      this.id = state.id;
       return;
     }
     // this.initForm();
+  }
+
+  showFormDialog(): void {
+    this.hideFormDialog = true;
+  }
+
+  create(input: Assessment): void {
+    this.assessmentRepo.create({ ...input, patient_id: this.id }).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   toggleMenu(): void {

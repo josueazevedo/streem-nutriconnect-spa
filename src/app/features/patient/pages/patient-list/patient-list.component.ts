@@ -78,7 +78,7 @@ export class PatientListComponent {
         this.search = '';
         //temp
         this.selectedPatient = this.list[0];
-        this.navigateToRecord();
+        // this.navigateToRecord();
       });
   }
 
