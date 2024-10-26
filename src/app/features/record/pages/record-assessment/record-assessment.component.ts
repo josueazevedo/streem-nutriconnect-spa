@@ -10,10 +10,15 @@ import {
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { AssessmentDialogComponent } from '../../components/assessment-dialog/assessment-dialog.component';
-import { AssessmentRepositoryService } from '../../services/assessment-repository/assessment-repository.service';
+import {
+  AssessmentRepositoryService,
+  AssessmentResponse,
+} from '../../services/assessment-repository/assessment-repository.service';
 import { Assessment } from '../../models/assessment.model';
 import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
+import { ConfirmDialogService } from '../../../../core/services/confirm-dialog-service/confirm-dialog.service';
+import { Subscription } from 'rxjs';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -39,11 +44,16 @@ export class RecordAssessmentComponent {
   chartOptions: Partial<ChartOptions>;
   hideFormDialog: boolean = false;
   id: string = '';
+  private selectedAssessmentId: string = '';
+  selectedAssessment: Assessment = {} as Assessment;
+  currentAssessment: Assessment = {} as Assessment;
+  private sub = new Subscription();
 
   constructor(
     private location: Location,
     private assessmentRepo: AssessmentRepositoryService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private confirmDialog: ConfirmDialogService
   ) {
     this.chartOptions = {
       series: [
@@ -85,19 +95,40 @@ export class RecordAssessmentComponent {
     if (state?.id) {
       // this.getPatient(state.id);
       this.id = state.id;
+      this.findCurrent(state.id);
       return;
     }
+    this.location.back();
   }
 
   showFormDialog(): void {
+    this.selectedAssessment = {
+      height: this.currentAssessment.height,
+    } as Assessment;
     this.hideFormDialog = true;
+  }
+
+  editCurrent(): void {
+    this.selectedAssessment = { ...this.currentAssessment };
+    this.hideFormDialog = true;
+  }
+
+  save(input: Assessment) {
+    if (!input.id) {
+      this.create(input);
+      return;
+    }
+    this.update(input);
   }
 
   create(input: Assessment): void {
     this.assessmentRepo.create({ ...input, patient_id: this.id }).subscribe({
-      next: () => {
+      next: (response) => {
         this.hideFormDialog = false;
         this.notify.addNotification('success', 'Avaliação criada com sucesso');
+        const { data } = response;
+        this.selectedAssessment = this.parseAssessment(data);
+        this.findCurrent(this.id);
       },
       error: (error) => {
         errorNotify(() => {
@@ -105,6 +136,89 @@ export class RecordAssessmentComponent {
             'warning',
             'Verifique as informações digitadas'
           );
+        }, error);
+      },
+    });
+  }
+
+  update(input: Assessment): void {
+    this.assessmentRepo.update({ ...input, patient_id: this.id }).subscribe({
+      next: (response) => {
+        this.hideFormDialog = false;
+        this.notify.addNotification(
+          'success',
+          'Avaliação atualizada com sucesso'
+        );
+        const { data } = response;
+        this.selectedAssessment = this.parseAssessment(data);
+        this.findCurrent(this.id);
+      },
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Verifique as informações digitadas'
+          );
+        }, error);
+      },
+    });
+  }
+
+  delete(id: string): void {
+    this.assessmentRepo.delete(id).subscribe({
+      next: () => {
+        this.hideFormDialog = false;
+        this.notify.addNotification(
+          'success',
+          'Avaliação removida com sucesso'
+        );
+        this.selectedAssessment = {} as Assessment;
+        this.findCurrent(this.id);
+      },
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Algo inesperado aconteceu, tente novamente mais tarde'
+          );
+        }, error);
+      },
+    });
+  }
+
+  findCurrent(id: string): void {
+    this.assessmentRepo.getCurrent(id).subscribe({
+      next: (response) => {
+        const { data } = response;
+        this.currentAssessment = this.parseAssessment(data);
+      },
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Algo inesperado aconteceu, tente novamente mais tarde'
+          );
+          this.location.back();
+        }, error);
+      },
+    });
+  }
+
+  find(id: string): void {
+    this.assessmentRepo.getById(id).subscribe({
+      next: (response) => {
+        this.hideFormDialog = true;
+        const { data } = response;
+        this.selectedAssessment = this.parseAssessment(data);
+        this.hideFormDialog = true;
+      },
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Algo inesperado aconteceu, tente novamente mais tarde'
+          );
+          this.location.back();
         }, error);
       },
     });
@@ -121,5 +235,40 @@ export class RecordAssessmentComponent {
 
   onBack(): void {
     this.location.back();
+  }
+
+  initState(): void {
+    this.sub.add(
+      this.confirmDialog.observerConfirm().subscribe((confirm) => {
+        if (confirm.status && confirm.action_event === 'REMOVE_ASSESSMENT') {
+          this.delete(this.selectedAssessmentId);
+        }
+      })
+    );
+  }
+
+  parseAssessment(data: AssessmentResponse) {
+    return {
+      id: data.id,
+      patient_id: data.patient_id,
+      date_assesssment: data.date_assesssment,
+      weight: data.weight,
+      height: data.height,
+      imc: data.imc,
+      body_density: data.body_density,
+      fat_percentage: data.fat_percentage,
+      obs: data.obs,
+      peito: data.phy_skin_folds.peito,
+      abdominal: data.phy_skin_folds.abdominal,
+      coxa: data.phy_skin_folds.coxa,
+      triceps: data.phy_skin_folds.triceps,
+      subescapular: data.phy_skin_folds.subescapular,
+      suprailiaca: data.phy_skin_folds.suprailiaca,
+      axilar_media: data.phy_skin_folds.axilar_media,
+      cintura: data.phy_circumferences.cintura,
+      quadril: data.phy_circumferences.quadril,
+      braco: data.phy_circumferences.braco,
+      panturrilha: data.phy_circumferences.panturrilha,
+    };
   }
 }

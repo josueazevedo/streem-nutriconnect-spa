@@ -1,8 +1,8 @@
 export interface Assessment {
   // PhyAssessment fields
-  tenant_id: string;
+  id?: string;
   patient_id: string;
-  date_assesssment: Date;
+  date_assesssment: string;
   weight: number;
   height: number;
   imc: number;

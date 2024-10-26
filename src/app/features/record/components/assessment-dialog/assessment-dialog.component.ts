@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +17,8 @@ import {
 import { NgxMaskDirective } from 'ngx-mask';
 import { AlertComponent } from '../../../../core/components/alert/alert.component';
 import { parseFormErrorMessage } from '../../../../core/helpers/form-error-message.helper';
+import { ConfirmDialogService } from '../../../../core/services/confirm-dialog-service/confirm-dialog.service';
+import { Assessment } from '../../models/assessment.model';
 
 @Component({
   selector: 'app-assessment-dialog',
@@ -24,14 +34,17 @@ import { parseFormErrorMessage } from '../../../../core/helpers/form-error-messa
 })
 export class AssessmentDialogComponent implements OnInit {
   @Input()
-  assesment?: AssessmentInput;
+  assesment?: Assessment;
   form!: FormGroup;
   @Output()
   saveEvent = new EventEmitter();
   @Output()
   closeEvent = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private confirmDialog: ConfirmDialogService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -39,6 +52,7 @@ export class AssessmentDialogComponent implements OnInit {
 
   initForm() {
     this.form = this.fb.group({
+      id: [this.assesment?.id],
       weight: [this.assesment?.weight, [Validators.required]],
       height: [this.assesment?.height, [Validators.required]],
       peito: [this.assesment?.peito],
@@ -62,7 +76,7 @@ export class AssessmentDialogComponent implements OnInit {
       return;
     }
 
-    this.saveEvent.emit(this.form.value);
+    this.saveEvent.emit(this.parseAssessment(this.form.value));
   }
 
   close() {
@@ -72,24 +86,30 @@ export class AssessmentDialogComponent implements OnInit {
   getErrorMessage(controlName: string): string {
     return parseFormErrorMessage(this.form, controlName);
   }
+
+  handleDelete() {
+    this.confirmDialog.showDialog(
+      'Deseja realmente excluir este registro?',
+      'REMOVE_ASSESSMENT'
+    );
+  }
+
+  parseAssessment(data: any) {
+    return {
+      id: data.id,
+      weight: +data.weight,
+      height: +data.height,
+      peito: data.peito != null ? +data.peito : null,
+      abdominal: data.abdominal != null ? +data.abdominal : null,
+      coxa: data.coxa != null ? +data.coxa : null,
+      triceps: data.triceps != null ? +data.triceps : null,
+      subescapular: data.subescapular != null ? +data.subescapular : null,
+      suprailiaca: data.suprailiaca != null ? +data.suprailiaca : null,
+      axilar_media: data.axilar_media != null ? +data.axilar_media : null,
+      cintura: data.cintura != null ? +data.cintura : null,
+      quadril: data.quadril != null ? +data.quadril : null,
+      braco: data.braco != null ? +data.braco : null,
+      panturrilha: data.panturrilha != null ? +data.panturrilha : null,
+    };
+  }
 }
-
-export type AssessmentInput = {
-  weight: number;
-  height: number;
-
-  // PhySkinFolds fields
-  peito?: number;
-  abdominal?: number;
-  coxa?: number;
-  triceps?: number;
-  subescapular?: number;
-  suprailiaca?: number;
-  axilar_media?: number;
-
-  // PhyCircumferences fields
-  cintura: number;
-  quadril: number;
-  braco: number;
-  panturrilha: number;
-};

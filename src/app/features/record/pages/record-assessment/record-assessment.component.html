@@ -176,6 +176,7 @@
         </span>
         <button
           type="button"
+          (click)="editCurrent()"
           class="text-sky-600 border border-sky-600 hover:bg-sky-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-sky-500 font-medium rounded-lg text-sm p-1.5 text-center inline-flex items-center me-2 dark:border-sky-600 dark:text-sky-600 dark:hover:text-white dark:focus:ring-sky-500 dark:hover:bg-sky-500 group"
         >
           <svg
@@ -235,7 +236,8 @@
 <app-assessment-dialog
   *ngIf="hideFormDialog"
   (closeEvent)="hideFormDialog = false"
-  (saveEvent)="create($event)"
+  (saveEvent)="save($event)"
+  [assesment]="selectedAssessment"
 />
 
 <ng-template #noContent>
