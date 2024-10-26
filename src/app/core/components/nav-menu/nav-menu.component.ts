@@ -1,8 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NavigateService } from '../../services/navigate/navigate.service';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { PATIENT_ROUTES } from '../../../features/patient/patient.routes';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,4 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class NavMenuComponent {
   patientRoutes = PATIENT_ROUTES;
+
+  @Output()
+  onClose = new EventEmitter<void>();
+
+  closeMenu(): void {
+    this.onClose.emit();
+  }
 }
