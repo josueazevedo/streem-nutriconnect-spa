@@ -1,8 +1,7 @@
-import { Location, CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Location, CommonModule, DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 import { HeaderRecordComponent } from '../../components/header-record/header-record.component';
 import {
-  ChartComponent,
   ApexAxisChartSeries,
   ApexChart,
   ApexXAxis,
@@ -11,6 +10,7 @@ import {
 } from 'ng-apexcharts';
 import { AssessmentDialogComponent } from '../../components/assessment-dialog/assessment-dialog.component';
 import {
+  AssessmentHistory,
   AssessmentRepositoryService,
   AssessmentResponse,
 } from '../../services/assessment-repository/assessment-repository.service';
@@ -21,6 +21,10 @@ import { ConfirmDialogService } from '../../../../core/services/confirm-dialog-s
 import { Subscription } from 'rxjs';
 import { RecordPageMenuComponent } from '../../components/record-page-menu/record-page-menu.component';
 import { RecordService } from '../../services/record/record.service';
+import {
+  DynamicTableColumn,
+  DynamicTableComponent,
+} from '../../../../core/design-system/dynamic-table/dynamic-table.component';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -38,7 +42,9 @@ export type ChartOptions = {
     NgApexchartsModule,
     AssessmentDialogComponent,
     RecordPageMenuComponent,
+    DynamicTableComponent,
   ],
+  providers: [DatePipe],
   templateUrl: './record-assessment.component.html',
   styleUrl: './record-assessment.component.scss',
 })
@@ -47,17 +53,37 @@ export class RecordAssessmentComponent {
   chartOptions: Partial<ChartOptions>;
   hideFormDialog: boolean = false;
   id: string = '';
-  private selectedAssessmentId: string = '';
   selectedAssessment: Assessment = {} as Assessment;
   currentAssessment: Assessment = {} as Assessment;
   private sub = new Subscription();
+
+  list: AssessmentHistory[] = [];
+  showHistory: boolean = false;
+  fixedColumn = 'date_assesssment';
+  columns: DynamicTableColumn[] = [
+    {
+      property: 'date_assesssment',
+      name: 'Data da avaliação',
+    },
+    {
+      property: 'height',
+      name: 'Altura',
+    },
+    {
+      property: 'weight',
+      name: 'Peso',
+    },
+  ];
+  currentPage = 1;
+  totalPages = 0;
 
   constructor(
     private location: Location,
     private assessmentRepo: AssessmentRepositoryService,
     private notify: NotificationService,
     private confirmDialog: ConfirmDialogService,
-    private record: RecordService
+    private record: RecordService,
+    private datePipe: DatePipe
   ) {
     this.chartOptions = {
       series: [
@@ -198,6 +224,7 @@ export class RecordAssessmentComponent {
       next: (response) => {
         const { data } = response;
         this.currentAssessment = this.parseAssessment(data);
+        this.showHistory = false;
       },
       error: (error) => {
         errorNotify(() => {
@@ -276,5 +303,46 @@ export class RecordAssessmentComponent {
       braco: data.phy_circumferences.braco,
       panturrilha: data.phy_circumferences.panturrilha,
     };
+  }
+
+  handleSelect(id: string) {
+    const assessment = this.list.find((patient) => patient.id === id) || null;
+    this.find(assessment!.id!);
+  }
+
+  history(): void {
+    this.assessmentRepo.getHistory(this.id, this.currentPage, 4).subscribe({
+      next: (response) => {
+        this.list = response.data.items.map((item) => ({
+          ...item,
+          date_assesssment: this.datePipe.transform(
+            item.date_assesssment,
+            'dd/MM/yyyy',
+            '+1000'
+          )!,
+        }));
+        this.totalPages = response.data.pages;
+      },
+      error: (error) => {
+        errorNotify(() => {
+          this.notify.addNotification(
+            'warning',
+            'Algo inesperado aconteceu, tente novamente mais tarde'
+          );
+        }, error);
+      },
+    });
+  }
+
+  handlePageChange(page: number) {
+    this.currentPage = page;
+    this.history();
+  }
+
+  showHistoryTable(): void {
+    this.showHistory = !this.showHistory;
+    if (this.showHistory) {
+      this.history();
+    }
   }
 }

@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Assessment } from '../../models/assessment.model';
-import { Response } from '../../../../core/types/response.interface';
+import {
+  Pagination,
+  Response,
+} from '../../../../core/types/response.interface';
 import { Observable } from 'rxjs';
 import { URL_RECORD_ASSESSMENT } from '../../url.record';
 
@@ -40,6 +43,22 @@ export class AssessmentRepositoryService {
       URL_RECORD_ASSESSMENT.CURRENT(id)
     );
   }
+
+  getHistory(
+    id: string,
+    page: number = 1,
+    limit: number = 10
+  ): Observable<Response<Pagination<AssessmentHistory[]>>> {
+    let params = new HttpParams();
+
+    params = params.append('page', page);
+    params = params.append('limit', limit);
+
+    return this.http.get<Response<Pagination<AssessmentHistory[]>>>(
+      URL_RECORD_ASSESSMENT.HISTORY(id),
+      { params }
+    );
+  }
 }
 
 export type AssessmentResponse = {
@@ -67,4 +86,11 @@ export type AssessmentResponse = {
     braco: number;
     panturrilha: number;
   };
+};
+
+export type AssessmentHistory = {
+  id: string;
+  date_assesssment: string;
+  weight: number;
+  height: number;
 };
