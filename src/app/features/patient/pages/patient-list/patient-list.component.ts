@@ -19,6 +19,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ExternalPatientDialogComponent } from '../../components/external-patient-dialog/external-patient-dialog.component';
 import { PatientActionDialogComponent } from '../../components/patient-action-dialog/patient-action-dialog.component';
 import { RECORD_ROUTES } from '../../../record/record.routes';
+import { RecordService } from '../../../record/services/record/record.service';
 
 @Component({
   selector: 'app-patient-list',
@@ -61,7 +62,8 @@ export class PatientListComponent {
     private patientRepository: PatientRepositoryService,
     private patientService: PatientService,
     private nav: NavigateService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private record: RecordService
   ) {}
 
   ngOnInit() {
@@ -93,7 +95,14 @@ export class PatientListComponent {
   }
 
   navigateToRecord() {
-    this.nav.goTo(RECORD_ROUTES.assessment, { id: this.selectedPatient?.id });
+    this.record.setPatient({
+      id: this.selectedPatient!.id,
+      name: this.selectedPatient!.name,
+      phone: this.selectedPatient!.phone_number,
+      type: this.selectedPatient!.type,
+      status: this.selectedPatient!.status,
+    });
+    this.nav.goTo(RECORD_ROUTES.evolution, { id: this.selectedPatient?.id });
   }
 
   handlePageChange(page: number) {

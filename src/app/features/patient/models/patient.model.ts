@@ -5,6 +5,7 @@ export interface Patient {
   phone_number: string;
   date_of_birth: Date;
   gender: string;
+  type: number;
   street: string;
   number: string;
   complement?: string;
@@ -13,7 +14,7 @@ export interface Patient {
   state: string;
   zip_code: string;
   photo?: string;
-  status: boolean | string;
+  status: boolean;
   created_at: Date;
   updated_at: Date;
 }

@@ -19,6 +19,7 @@ import { errorNotify } from '../../../../core/helpers/error-notify.helper';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
 import { ConfirmDialogService } from '../../../../core/services/confirm-dialog-service/confirm-dialog.service';
 import { Subscription } from 'rxjs';
+import { RecordPageMenuComponent } from '../../components/record-page-menu/record-page-menu.component';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -35,6 +36,7 @@ export type ChartOptions = {
     HeaderRecordComponent,
     NgApexchartsModule,
     AssessmentDialogComponent,
+    RecordPageMenuComponent,
   ],
   templateUrl: './record-assessment.component.html',
   styleUrl: './record-assessment.component.scss',
@@ -91,7 +93,7 @@ export class RecordAssessmentComponent {
 
   ngOnInit(): void {
     const state = this.location.getState() as { id: string };
-
+    this.initState();
     if (state?.id) {
       // this.getPatient(state.id);
       this.id = state.id;
@@ -173,6 +175,7 @@ export class RecordAssessmentComponent {
           'Avaliação removida com sucesso'
         );
         this.selectedAssessment = {} as Assessment;
+        this.hideFormDialog = false;
         this.findCurrent(this.id);
       },
       error: (error) => {
@@ -196,9 +199,8 @@ export class RecordAssessmentComponent {
         errorNotify(() => {
           this.notify.addNotification(
             'warning',
-            'Algo inesperado aconteceu, tente novamente mais tarde'
+            'Nenhuma avaliação encontrada, crie uma nova'
           );
-          this.location.back();
         }, error);
       },
     });
@@ -241,7 +243,7 @@ export class RecordAssessmentComponent {
     this.sub.add(
       this.confirmDialog.observerConfirm().subscribe((confirm) => {
         if (confirm.status && confirm.action_event === 'REMOVE_ASSESSMENT') {
-          this.delete(this.selectedAssessmentId);
+          this.delete(this.selectedAssessment!.id!);
         }
       })
     );
