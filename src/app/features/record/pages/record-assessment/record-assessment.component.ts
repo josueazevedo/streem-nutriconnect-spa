@@ -20,6 +20,7 @@ import { NotificationService } from '../../../../core/services/notification/noti
 import { ConfirmDialogService } from '../../../../core/services/confirm-dialog-service/confirm-dialog.service';
 import { Subscription } from 'rxjs';
 import { RecordPageMenuComponent } from '../../components/record-page-menu/record-page-menu.component';
+import { RecordService } from '../../services/record/record.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -55,7 +56,8 @@ export class RecordAssessmentComponent {
     private location: Location,
     private assessmentRepo: AssessmentRepositoryService,
     private notify: NotificationService,
-    private confirmDialog: ConfirmDialogService
+    private confirmDialog: ConfirmDialogService,
+    private record: RecordService
   ) {
     this.chartOptions = {
       series: [
@@ -92,15 +94,17 @@ export class RecordAssessmentComponent {
   }
 
   ngOnInit(): void {
-    const state = this.location.getState() as { id: string };
-    this.initState();
-    if (state?.id) {
-      // this.getPatient(state.id);
-      this.id = state.id;
-      this.findCurrent(state.id);
-      return;
-    }
-    this.location.back();
+    // const state = this.location.getState() as { id: string };
+    // this.initState();
+    // if (state?.id) {
+    //   // this.getPatient(state.id);
+    //   this.id = this.record.getPatient()?.id!;
+    //   this.findCurrent(state.id);
+    //   return;
+    // }
+    // this.location.back();
+    this.id = this.record.getPatient()?.id!;
+    this.findCurrent(this.id);
   }
 
   showFormDialog(): void {

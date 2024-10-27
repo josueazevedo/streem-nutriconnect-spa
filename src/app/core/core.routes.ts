@@ -7,6 +7,7 @@ import { ActivedGuard } from './guards/actived.guard';
 import { PATIENT_MODULE_PATH } from '../features/patient/patient.routes';
 import { PUBLIC_MODULE_PATH } from '../features/public/public.routes';
 import { RECORD_MODULE_PATH } from '../features/record/record.routes';
+import { PatientSelectGuard } from '../features/record/guards/patient-select.guard';
 
 export const CoreRoutes: Routes = [
   {
@@ -41,7 +42,12 @@ export const CoreRoutes: Routes = [
       },
       {
         path: RECORD_MODULE_PATH,
-        canActivate: [AuthGuard, ActivedGuard, VerifiedGuard],
+        canActivate: [
+          AuthGuard,
+          ActivedGuard,
+          VerifiedGuard,
+          PatientSelectGuard,
+        ],
         loadChildren: () =>
           import('../features/record/record.routes').then(
             (m) => m.RecordRoutes

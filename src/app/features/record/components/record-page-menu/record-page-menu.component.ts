@@ -14,7 +14,7 @@ import { RECORD_ROUTES } from '../../record.routes';
   styleUrl: './record-page-menu.component.scss',
 })
 export class RecordPageMenuComponent {
-  hideMenu: boolean = false;
+  hideMenu: boolean = true;
   @Output() back = new EventEmitter<void>();
   patient?: PatientSelect;
 
