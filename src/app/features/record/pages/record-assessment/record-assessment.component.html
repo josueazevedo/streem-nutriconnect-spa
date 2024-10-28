@@ -72,7 +72,13 @@
         ></apx-chart>
       </div>
     </div>
-
+    <div>
+      <app-alert
+        message="O IMC é uma medida que ajuda a avaliar o risco de doenças crônicas, embora tenha limitações. Confira algumas recomendações de saúde e os riscos mais comuns:"
+        [list]="imcRisks"
+        type="basic"
+      />
+    </div>
     <div
       id="accordion-flush"
       data-accordion="collapse"

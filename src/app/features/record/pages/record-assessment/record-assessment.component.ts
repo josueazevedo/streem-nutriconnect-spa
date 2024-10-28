@@ -25,6 +25,7 @@ import {
   DynamicTableColumn,
   DynamicTableComponent,
 } from '../../../../core/design-system/dynamic-table/dynamic-table.component';
+import { AlertComponent } from '../../../../core/components/alert/alert.component';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -43,6 +44,7 @@ export type ChartOptions = {
     AssessmentDialogComponent,
     RecordPageMenuComponent,
     DynamicTableComponent,
+    AlertComponent,
   ],
   providers: [DatePipe],
   templateUrl: './record-assessment.component.html',
@@ -76,6 +78,8 @@ export class RecordAssessmentComponent {
   ];
   currentPage = 1;
   totalPages = 0;
+
+  imcRisks: string[] = [];
 
   constructor(
     private location: Location,
@@ -223,7 +227,8 @@ export class RecordAssessmentComponent {
     this.assessmentRepo.getCurrent(id).subscribe({
       next: (response) => {
         const { data } = response;
-        this.currentAssessment = this.parseAssessment(data);
+        this.currentAssessment = this.parseAssessment(data.assessment);
+        this.imcRisks = data.imcRisks;
         this.showHistory = false;
       },
       error: (error) => {

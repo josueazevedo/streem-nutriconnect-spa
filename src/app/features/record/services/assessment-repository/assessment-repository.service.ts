@@ -38,8 +38,8 @@ export class AssessmentRepositoryService {
     );
   }
 
-  getCurrent(id: string): Observable<Response<AssessmentResponse>> {
-    return this.http.get<Response<AssessmentResponse>>(
+  getCurrent(id: string): Observable<Response<CurrentAssessment>> {
+    return this.http.get<Response<CurrentAssessment>>(
       URL_RECORD_ASSESSMENT.CURRENT(id)
     );
   }
@@ -60,6 +60,12 @@ export class AssessmentRepositoryService {
     );
   }
 }
+
+export type CurrentAssessment = {
+  imcClassification: string;
+  imcRisks: string[];
+  assessment: AssessmentResponse;
+};
 
 export type AssessmentResponse = {
   id: string;
