@@ -17,6 +17,10 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       if (e.status === 401) {
         profile.clearProfile();
         nav.goTo(AUTH_ROUTES.signIn);
+        notify.addNotification(
+          'warning',
+          'Sua sessão expirou. Por favor, faça login novamente'
+        );
         throw e;
       }
       if (e.status < 500) {
