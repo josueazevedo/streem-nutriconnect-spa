@@ -80,6 +80,7 @@ export class RecordAssessmentComponent {
   totalPages = 0;
 
   imcRisks: string[] = [];
+  patientType: number = 2;
 
   constructor(
     private location: Location,
@@ -124,16 +125,8 @@ export class RecordAssessmentComponent {
   }
 
   ngOnInit(): void {
-    // const state = this.location.getState() as { id: string };
-    // this.initState();
-    // if (state?.id) {
-    //   // this.getPatient(state.id);
-    //   this.id = this.record.getPatient()?.id!;
-    //   this.findCurrent(state.id);
-    //   return;
-    // }
-    // this.location.back();
     this.id = this.record.getPatient()?.id!;
+    this.patientType = this.record.getPatient()?.type!;
     this.findCurrent(this.id);
   }
 

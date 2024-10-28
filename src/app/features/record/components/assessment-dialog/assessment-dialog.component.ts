@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -35,11 +27,23 @@ import { Assessment } from '../../models/assessment.model';
 export class AssessmentDialogComponent implements OnInit {
   @Input()
   assesment?: Assessment;
+  @Input()
+  type: number = 2;
   form!: FormGroup;
   @Output()
   saveEvent = new EventEmitter();
   @Output()
   closeEvent = new EventEmitter();
+  foldsEnable = {
+    peito: true,
+    abdominal: true,
+    coxa: true,
+    triceps: true,
+    subescapular: true,
+    suprailiaca: true,
+    axilar_media: true,
+    cintura: true,
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -51,6 +55,15 @@ export class AssessmentDialogComponent implements OnInit {
   }
 
   initForm() {
+    const method = [
+      this.assesment?.peito,
+      this.assesment?.abdominal,
+      this.assesment?.coxa,
+      this.assesment?.triceps,
+      this.assesment?.subescapular,
+      this.assesment?.suprailiaca,
+      this.assesment?.axilar_media,
+    ].filter((fold) => fold !== null && fold !== undefined);
     this.form = this.fb.group({
       id: [this.assesment?.id],
       weight: [this.assesment?.weight, [Validators.required]],
@@ -66,7 +79,9 @@ export class AssessmentDialogComponent implements OnInit {
       quadril: [this.assesment?.quadril],
       braco: [this.assesment?.braco],
       panturrilha: [this.assesment?.panturrilha],
+      method: [method.length > 0 ? method : null],
     });
+    this.changeFoldsMethod(method.length);
   }
 
   save() {
@@ -110,6 +125,65 @@ export class AssessmentDialogComponent implements OnInit {
       quadril: data.quadril != null ? +data.quadril : null,
       braco: data.braco != null ? +data.braco : null,
       panturrilha: data.panturrilha != null ? +data.panturrilha : null,
+    };
+  }
+
+  changeFoldsMethod(vl: number): void {
+    const currentSelection = this.form.get('method')?.value;
+    this.form.get('method')?.setValue(currentSelection === vl ? null : vl);
+    const method = this.form.get('method')?.value;
+
+    if (!method) {
+      this.foldsEnable = {
+        peito: true,
+        abdominal: true,
+        coxa: true,
+        triceps: true,
+        subescapular: true,
+        suprailiaca: true,
+        axilar_media: true,
+        cintura: true,
+      };
+      return;
+    }
+
+    if (method === 3 && this.type === 2) {
+      this.foldsEnable = {
+        peito: false,
+        abdominal: false,
+        coxa: false,
+        triceps: true,
+        subescapular: true,
+        suprailiaca: true,
+        axilar_media: true,
+        cintura: true,
+      };
+      return;
+    }
+
+    if (method === 3 && this.type === 1) {
+      this.foldsEnable = {
+        peito: true,
+        abdominal: true,
+        coxa: false,
+        triceps: false,
+        subescapular: true,
+        suprailiaca: false,
+        axilar_media: true,
+        cintura: true,
+      };
+      return;
+    }
+
+    this.foldsEnable = {
+      peito: false,
+      abdominal: false,
+      coxa: false,
+      triceps: false,
+      subescapular: false,
+      suprailiaca: false,
+      axilar_media: false,
+      cintura: false,
     };
   }
 }

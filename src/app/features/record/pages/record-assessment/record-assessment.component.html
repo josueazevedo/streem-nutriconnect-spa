@@ -72,9 +72,9 @@
         ></apx-chart>
       </div>
     </div>
-    <div>
+    <div *ngIf="imcRisks.length">
       <app-alert
-        message="O IMC é uma medida que ajuda a avaliar o risco de doenças crônicas, embora tenha limitações. Confira algumas recomendações de saúde e os riscos mais comuns:"
+        message="O IMC é uma medida utilizada para avaliar o risco de desenvolver doenças crônicas, embora apresente algumas limitações. Confira as recomendações de saúde e os possíveis riscos associados ao IMC calculado::"
         [list]="imcRisks"
         type="basic"
       />
@@ -137,6 +137,7 @@
 <app-assessment-dialog
   *ngIf="hideFormDialog"
   (closeEvent)="hideFormDialog = false"
+  [type]="patientType"
   (saveEvent)="save($event)"
   [assesment]="selectedAssessment"
 />

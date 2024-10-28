@@ -95,8 +95,42 @@
                 Dobras cutâneas
               </p>
               <p class="text-xs text-gray-500">
-                Utilizada para estimar a composição corporal.
+                Utilizada para estimar a composição corporal. (Mét. Jackson &
+                Pollock)
               </p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <p class="text-sm font-medium text-gray-900 dark:text-gray-300">
+                Método:
+              </p>
+              <div class="flex items-center gap-2">
+                <input
+                  id="termos"
+                  type="checkbox"
+                  [value]="3"
+                  [checked]="form.get('method')?.value === 3"
+                  (change)="changeFoldsMethod(3)"
+                  class="w-4 h-4 text-sky-600 bg-gray-100 border-gray-300 rounded focus:ring-sky-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="termos"
+                  class="text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >3 dobras
+                </label>
+                <input
+                  id="termos"
+                  type="checkbox"
+                  [value]="7"
+                  [checked]="form.get('method')?.value === 7"
+                  (change)="changeFoldsMethod(7)"
+                  class="w-4 h-4 text-sky-600 bg-gray-100 border-gray-300 rounded focus:ring-sky-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="termos"
+                  class="text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >7 dobras
+                </label>
+              </div>
             </div>
             <div class="grid gap-4 grid-cols-2 mt-2">
               <div class="col-span-2 sm:col-span-1">
@@ -115,6 +149,8 @@
                     autocomplete="off"
                     formControlName="abdominal"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.abdominal"
+                    [class.bg-gray-50]="foldsEnable.abdominal"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -135,6 +171,8 @@
                     autocomplete="off"
                     formControlName="peito"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.peito"
+                    [class.bg-gray-50]="foldsEnable.peito"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -155,6 +193,8 @@
                     autocomplete="off"
                     formControlName="coxa"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.coxa"
+                    [class.bg-gray-50]="foldsEnable.coxa"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -175,6 +215,8 @@
                     autocomplete="off"
                     formControlName="triceps"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.triceps"
+                    [class.bg-gray-50]="foldsEnable.triceps"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -195,6 +237,8 @@
                     autocomplete="off"
                     formControlName="subescapular"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.subescapular"
+                    [class.bg-gray-50]="foldsEnable.subescapular"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -215,6 +259,8 @@
                     autocomplete="off"
                     formControlName="suprailiaca"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.suprailiaca"
+                    [class.bg-gray-50]="foldsEnable.suprailiaca"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -235,6 +281,8 @@
                     autocomplete="off"
                     formControlName="axilar_media"
                     [mask]="'separator.2'"
+                    [readonly]="foldsEnable.axilar_media"
+                    [class.bg-gray-50]="foldsEnable.axilar_media"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -244,7 +292,7 @@
 
           <div class="col-span-2 sm:col-span-1">
             <p class="md:hidden border-b border-gray-900/10 mb-3"></p>
-            <div class="flex flex-col mb-2">
+            <div class="flex flex-col mb-2 md:mb-[2.25rem]">
               <p class="text-sm font-medium text-gray-900 truncate">
                 Medidas de circunferências
               </p>
@@ -252,6 +300,7 @@
                 Importantes indicadores de riscos à saúde
               </p>
             </div>
+
             <div class="grid gap-4 grid-cols-2 mt-2">
               <div class="col-span-2 sm:col-span-1">
                 <label
