@@ -64,6 +64,7 @@ export class AssessmentRepositoryService {
 export type CurrentAssessment = {
   imcClassification: string;
   imcRisks: string[];
+  fatRisks: string[];
   assessment: AssessmentResponse;
 };
 

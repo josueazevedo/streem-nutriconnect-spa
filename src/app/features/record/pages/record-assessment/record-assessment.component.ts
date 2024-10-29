@@ -79,7 +79,9 @@ export class RecordAssessmentComponent {
   currentPage = 1;
   totalPages = 0;
 
+  showImcRisk: boolean = false;
   imcRisks: string[] = [];
+  fatRisks: string[] = [];
   patientType: number = 2;
 
   constructor(
@@ -222,7 +224,9 @@ export class RecordAssessmentComponent {
         const { data } = response;
         this.currentAssessment = this.parseAssessment(data.assessment);
         this.imcRisks = data.imcRisks;
+        this.fatRisks = data.fatRisks;
         this.showHistory = false;
+        this.showImcRisks();
       },
       error: (error) => {
         errorNotify(() => {
@@ -342,5 +346,27 @@ export class RecordAssessmentComponent {
     if (this.showHistory) {
       this.history();
     }
+  }
+
+  showImcRisks(): void {
+    let show = true;
+
+    if (
+      this.currentAssessment.fat_percentage &&
+      Number(this.currentAssessment.fat_percentage) <= 25 &&
+      this.patientType === 2
+    ) {
+      show = false;
+    }
+
+    if (
+      this.currentAssessment.fat_percentage &&
+      Number(this.currentAssessment.fat_percentage) <= 32 &&
+      this.patientType === 1
+    ) {
+      show = false;
+    }
+
+    this.showImcRisk = show;
   }
 }

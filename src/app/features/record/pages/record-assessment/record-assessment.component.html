@@ -72,10 +72,17 @@
         ></apx-chart>
       </div>
     </div>
-    <div *ngIf="imcRisks.length">
+    <div *ngIf="showImcRisk">
       <app-alert
-        message="O IMC é uma medida utilizada para avaliar o risco de desenvolver doenças crônicas, embora apresente algumas limitações. Confira as recomendações de saúde e os possíveis riscos associados ao IMC calculado::"
+        message="O IMC é uma medida utilizada para avaliar o risco de desenvolver doenças crônicas, embora apresente algumas limitações. Confira as recomendações de saúde e os possíveis riscos associados ao IMC calculado:"
         [list]="imcRisks"
+        type="basic"
+      />
+    </div>
+    <div *ngIf="fatRisks.length">
+      <app-alert
+        message="Com base na composição corporal, confira as recomendações de saúde e os possíveis riscos associados ao percentual de gordura calculado:"
+        [list]="fatRisks"
         type="basic"
       />
     </div>
