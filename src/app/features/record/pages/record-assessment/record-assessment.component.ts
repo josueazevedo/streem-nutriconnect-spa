@@ -7,6 +7,13 @@ import {
   ApexXAxis,
   ApexTitleSubtitle,
   NgApexchartsModule,
+  ApexStroke,
+  ApexDataLabels,
+  ApexMarkers,
+  ApexYAxis,
+  ApexGrid,
+  ApexLegend,
+  ApexTooltip,
 } from 'ng-apexcharts';
 import { AssessmentDialogComponent } from '../../components/assessment-dialog/assessment-dialog.component';
 import {
@@ -31,7 +38,10 @@ export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
   title: ApexTitleSubtitle;
+  stroke: ApexStroke;
+  tooltip: ApexTooltip;
 };
 
 @Component({
@@ -95,33 +105,56 @@ export class RecordAssessmentComponent {
     this.chartOptions = {
       series: [
         {
-          name: 'My-series',
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+          name: 'Medição 1',
+          data: [
+            { x: new Date('2023-01-01').getTime(), y: 10 },
+            { x: new Date('2023-02-01').getTime(), y: 15 },
+            { x: new Date('2023-03-01').getTime(), y: 8 },
+            { x: new Date('2023-04-01').getTime(), y: 12 },
+          ],
         },
         {
-          name: 'My-series 2',
-          data: [110, 141, 135, 151, 149, 162, 169, 191, 1148],
+          name: 'Medição 2',
+          data: [
+            { x: new Date('2023-01-15').getTime(), y: 20 },
+            { x: new Date('2023-02-20').getTime(), y: 18 },
+            { x: new Date('2023-03-25').getTime(), y: 22 },
+            { x: new Date('2023-04-10').getTime(), y: 25 },
+          ],
         },
       ],
       chart: {
-        height: 250,
-        type: 'bar',
+        type: 'line',
+        height: 350,
       },
-      title: {
-        text: 'My First Angular Chart',
+      stroke: {
+        curve: 'smooth',
       },
       xaxis: {
-        categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-        ],
+        type: 'datetime', // Define o eixo X como datas
+        title: {
+          text: 'Data da Medição',
+        },
+      },
+      yaxis: {
+        title: {
+          text: 'Dobras Cutâneas (mm)',
+        },
+        labels: {
+          formatter: (val: number) => `${val} mm`,
+        },
+      },
+      tooltip: {
+        x: {
+          format: 'dd MMM yyyy', // Formata a data no tooltip
+        },
+        y: {
+          formatter: (val: number) => `${val} mm`,
+        },
+      },
+      title: {
+        text: 'Evolução das Dobras Cutâneas',
+        align: 'left',
       },
     };
   }
